@@ -19,9 +19,7 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 		Vector3 newVelocity = new Vector3 (Input.GetAxis ("Horizontal"), 0.0f, Input.GetAxis ("Vertical")) * oomph;
 
-		rb.velocity = newVelocity;
-
-		
+		rb.AddForce(newVelocity);
 	}
 
 	void FixedUpdate(){
