@@ -1,9 +1,9 @@
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
-[Bb]uild/
-[Bb]uilds/
-Assets/AssetStoreTools*
+solid-enigma/[Ll]ibrary/
+solid-enigma/[Tt]emp/
+solid-enigma/[Oo]bj/
+solid-enigma/[Bb]uild/
+solid-enigma/[Bb]uilds/
+solid-enigma/Assets/AssetStoreTools*
 
 # Visual Studio 2015 cache directory
 /.vs/
