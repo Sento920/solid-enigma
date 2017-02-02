@@ -18,21 +18,25 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-                float logx = Input.GetAxis("Horizontal");
-                float logz = Input.GetAxis("Vertical");
-                //Input Checking
-                if(logx < 0.0f){
-                    p_heading = new Vector3( -1 * Math.Log10((logx * -1) +1), 0.0f, Math.Log10(logz))
-                }else if(logy < 0.0f){
-                    p_heading = new Vector3( Math.Log10(logx +1), 0.0f, -1 * Math.Log10((logz * -1) +1));
-                }else{
-                    p_heading = new Vector3( Math.Log10(logx + 1), 0.0f, Math.Log10(logz +1));
-                }
+        float logx = Input.GetAxis("Horizontal");
+        float logz = Input.GetAxis("Vertical");
+
+		//Input Checking
+		if (logx < 0.0f && logz < 0.0f) {
+			p_heading = new Vector3 ( -1 * Mathf.Log10 ((logx * -1) + 1), 0.0f, -1 * Mathf.Log10 ((logz * -1) + 1));
+		}
+		else if(logx < 0.0f){
+			p_heading = new Vector3 ( -1 * Mathf.Log10 ((logx * -1) + 1), 0.0f, Mathf.Log10 (logz + 1));
+		}else if(logz < 0.0f){
+			p_heading = new Vector3( Mathf.Log10(logx + 1), 0.0f, -1 * Mathf.Log10((logz * -1) + 1));
+		}else{
+			p_heading = new Vector3( Mathf.Log10(logx + 1), 0.0f, Mathf.Log10(logz + 1));
+		}
 		
 	}
 
 	void FixedUpdate(){
-		//rb.AddForce(p_heading * p_mov_const);
-                rb.velocity = p_heading * p_mov_const;
+		rb.AddForce(p_heading * p_mov_const);
+                //rb.velocity = p_heading * p_mov_const;
 	}
 }
