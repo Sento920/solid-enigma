@@ -9,8 +9,9 @@ public class WaterController : MonoBehaviour {
     }
 
     void OnTriggerStay(Collider other) {
-        if (other.attachedRigidbody)
+        if(other.tag == "player" && other.attachedRigidbody) {
             other.attachedRigidbody.AddForce(Vector3.up * 110);
+        }
     }
 
     void OnTriggerExit(Collider other) {
