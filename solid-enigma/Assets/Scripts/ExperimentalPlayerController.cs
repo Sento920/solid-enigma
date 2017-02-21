@@ -5,8 +5,8 @@ using UnityEngine;
 public class ExperimentalPlayerController : MonoBehaviour {
     
     public float maxSpeed = 10;
-    public float accel = 100;
-    public float drag = 0.25f;
+    public float accel = 150;
+    public float drag = 10;
     private Rigidbody rb;
     private Vector3 heading;
 
@@ -26,7 +26,7 @@ public class ExperimentalPlayerController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        rb.AddForce(heading * accel);
+        rb.AddForce(heading * accel -(rb.velocity * drag));
 
         //check for max speeds X.
         if(rb.velocity.x > maxSpeed) {
@@ -40,7 +40,5 @@ public class ExperimentalPlayerController : MonoBehaviour {
         }else if(rb.velocity.z < -maxSpeed) {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -maxSpeed);
         }
-
-        rb.AddForce(-rb.velocity * drag);
     }
 }
