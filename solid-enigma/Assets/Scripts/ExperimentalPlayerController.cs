@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class ExperimentalPlayerController : MonoBehaviour {
     
-    public float maxSpeed;
-    public float accel;
+    public float maxSpeed = 10;
+    public float accel = 100;
+    public float drag = 0.25f;
     private Rigidbody rb;
     private Vector3 heading;
 
@@ -25,23 +26,21 @@ public class ExperimentalPlayerController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        if(heading.x != 0 || heading.z != 0) {
-            rb.AddForce(heading * accel);
-        }
+        rb.AddForce(heading * accel);
+
         //check for max speeds X.
         if(rb.velocity.x > maxSpeed) {
-            rb.velocity = new Vector3(maxSpeed, 0.0f, rb.velocity.z);
+            rb.velocity = new Vector3(maxSpeed, rb.velocity.y, rb.velocity.z);
         } else if(rb.velocity.x < -maxSpeed) {
-            rb.velocity = new Vector3(-maxSpeed, 0.0f, rb.velocity.z);
+            rb.velocity = new Vector3(-maxSpeed, rb.velocity.y, rb.velocity.z);
         }
         //check for max speeds Z.
         if(rb.velocity.z > maxSpeed) {
-            rb.velocity = new Vector3(rb.velocity.x, 0.0f, maxSpeed);
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, maxSpeed);
         }else if(rb.velocity.z < -maxSpeed) {
-            rb.velocity = new Vector3(rb.velocity.x, 0.0f, -maxSpeed);
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -maxSpeed);
         }
-        
-        
 
+        rb.AddForce(-rb.velocity * drag);
     }
 }

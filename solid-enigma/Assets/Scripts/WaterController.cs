@@ -15,7 +15,7 @@ public class WaterController : MonoBehaviour {
         if(other.attachedRigidbody) {
             float force = 1.0f - ((other.transform.position.y - transform.position.y) / 5.0f);
 
-            Vector3 forceVector = -Physics.gravity * (force - other.attachedRigidbody.velocity.y * bounceDamp);
+            Vector3 forceVector = -Physics.gravity * other.attachedRigidbody.mass * (force - other.attachedRigidbody.velocity.y * bounceDamp);
             Vector3 dragVector = -other.attachedRigidbody.velocity * horizontalDrag;
             dragVector.y = 0.0f;
 
