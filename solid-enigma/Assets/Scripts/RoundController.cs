@@ -8,14 +8,17 @@ public class RoundController : MonoBehaviour {
 
     private float timeLeft;
     private GameState state = GameState.Paused;
+    
 
     [SerializeField] private float timeInMinutes = 5;
     [SerializeField] private GameObject sun;
+    [SerializeField] private CanvasGroup shopCanvas;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         ResetTimer();
         StartTimer();
+       shopCanvas.GetComponent<CanvasGroup>().alpha = 0;
 	}
 	
 	// Update is called once per frame
@@ -40,6 +43,7 @@ public class RoundController : MonoBehaviour {
                 // TODO: setup shop (hah), and get ready for the next round
             }
         } else if (state == GameState.Shop) {
+            shopCanvas.GetComponent<CanvasGroup>().alpha = 0;
             // TODO: shop related things, if they apply...
         } else if (state == GameState.Paused) {
             // look for unpause...
