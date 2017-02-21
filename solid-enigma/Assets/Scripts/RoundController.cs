@@ -43,7 +43,7 @@ public class RoundController : MonoBehaviour {
                 // TODO: setup shop (hah), and get ready for the next round
             }
         } else if (state == GameState.Shop) {
-            shopCanvas.GetComponent<CanvasGroup>().alpha = 0;
+            shopCanvas.GetComponent<CanvasGroup>().alpha = 1;
             // TODO: shop related things, if they apply...
         } else if (state == GameState.Paused) {
             // look for unpause...
