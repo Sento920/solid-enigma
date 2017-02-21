@@ -30,12 +30,11 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate(){
 		//rb.AddForce(heading * movConst);
-		float logx = (heading.x * movConst) + velocity.x;
-		float logz = (heading.z * movConst) + velocity.z;
+		float logx = (heading.x * movConst);
+        float logz = (heading.z * movConst);
+        velocity = new Vector3(logx,0.0f,logz);
 
-
-
-		//Input Checking
+		/*Input Checking
 		if (logx < 0.0f && logz < 0.0f) {
 			velocity = new Vector3 ( -1 * Mathf.Log10 ((logx * -1) + 1), 0.0f, -1 * Mathf.Log10 ((logz * -1) + 1));
 		}
@@ -45,8 +44,8 @@ public class PlayerController : MonoBehaviour {
 			velocity = new Vector3( Mathf.Log10(logx + 1), 0.0f, -1 * Mathf.Log10((logz * -1) + 1));
 		}else{
 			velocity = new Vector3( Mathf.Log10(logx + 1), 0.0f, Mathf.Log10(logz + 1));
-		}
+		}*/
 			
-        rb.velocity = velocity;
+        rb.AddForce(velocity);
 	}
 }
