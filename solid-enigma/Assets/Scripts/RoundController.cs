@@ -50,6 +50,7 @@ public class RoundController : MonoBehaviour {
 			shopCanvas.gameObject.SetActive(true);
 			gameCanvas.gameObject.SetActive(false);
             // TODO: shop related things, if they apply...
+
         } else if (state == GameState.Paused) {
             // look for unpause...
         }
@@ -81,4 +82,11 @@ public class RoundController : MonoBehaviour {
         else
             return minutes + ":0" + seconds;
     }
+
+	public void NewDay(){
+		shopCanvas.gameObject.SetActive(false);
+		gameCanvas.gameObject.SetActive(true);
+		ResetTimer();
+		StartTimer();
+	}
 }

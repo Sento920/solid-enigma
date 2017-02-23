@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ExperimentalPlayerController : MonoBehaviour {
     
@@ -9,16 +10,25 @@ public class ExperimentalPlayerController : MonoBehaviour {
     public float drag = 10;
     private Rigidbody rb;
     private Vector3 heading;
-
-    [SerializeField]
+	public Text fuelUI;
+    
+	[SerializeField]
     private float fuelUsage = 1.0f;
     [SerializeField]
     private float fuel = 100.0f;
 
+	[SerializeField]
+	private int numPeople;
+	[SerializeField]
+	private int peopleCapacity;
+	private List<GameObject> passengers;
+
 
     // Use this for initialization
     void Start () {
+		passengers = new List<GameObject> ();
         this.rb = GetComponent<Rigidbody>();
+		fuelUI.text = "fuel: " + fuel;
 	}
 
     // Update is called once per frame
@@ -27,7 +37,7 @@ public class ExperimentalPlayerController : MonoBehaviour {
         float z = Input.GetAxis("Vertical");
         heading = new Vector3(x, 0.0f, z);
         transform.LookAt(this.transform.position + heading);
-        
+		fuelUI.text = "fuel: " + fuel;
     }
 
     void FixedUpdate() {
@@ -57,4 +67,19 @@ public class ExperimentalPlayerController : MonoBehaviour {
     public void AddFuel(float fuel) {
         this.fuel += fuel;
     }
+
+	public void AddPerson(GameObject person){
+		numPeople++;
+		passengers.Add (person);
+		person.transform.SetParent (this.transform);
+	}
+
+	public void RemovePerson(){
+		numPeople--;
+	}
+
+	public bool HasCapacity(){
+		return (peopleCapacity - numPeople) > 0;
+	}
+
 }
