@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class FuelItemController : MonoBehaviour {
 
+    [SerializeField]
+    private float containedFuel = 100.0f;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -19,6 +22,7 @@ public class FuelItemController : MonoBehaviour {
         if (other.tag == "player")
         {
             Debug.Log("Player Collected Fuel");
+            other.GetComponent<ExperimentalPlayerController>().AddFuel(containedFuel);
             Destroy(this.gameObject);
         }
     }

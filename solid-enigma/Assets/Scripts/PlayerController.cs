@@ -5,12 +5,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-	private Rigidbody rb;
-	[SerializeField]
-	private int movConst = 10;
+    private Rigidbody rb;
+    [SerializeField]
+    private int movConst = 10;
     private Vector3 heading;
 
+    [SerializeField] private float fuelUsage = 1.0f;
+    private float fuel = 100.0f;
+
 	private Vector3 velocity;
+
+    void AddFuel(float fuel) {
+        fuel += fuel;
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -34,7 +41,7 @@ public class PlayerController : MonoBehaviour {
         float logz = (heading.z * movConst);
         velocity = new Vector3(logx,0.0f,logz);
 
-		/*Input Checking
+        /*Input Checking
 		if (logx < 0.0f && logz < 0.0f) {
 			velocity = new Vector3 ( -1 * Mathf.Log10 ((logx * -1) + 1), 0.0f, -1 * Mathf.Log10 ((logz * -1) + 1));
 		}
@@ -45,6 +52,8 @@ public class PlayerController : MonoBehaviour {
 		}else{
 			velocity = new Vector3( Mathf.Log10(logx + 1), 0.0f, Mathf.Log10(logz + 1));
 		}*/
+
+        fuel -= velocity.magnitude * fuelUsage;
 			
         rb.AddForce(velocity);
 	}

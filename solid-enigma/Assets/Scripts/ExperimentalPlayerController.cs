@@ -10,9 +10,14 @@ public class ExperimentalPlayerController : MonoBehaviour {
     private Rigidbody rb;
     private Vector3 heading;
 
+    [SerializeField]
+    private float fuelUsage = 1.0f;
+    [SerializeField]
+    private float fuel = 100.0f;
 
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start () {
         this.rb = GetComponent<Rigidbody>();
 	}
 
@@ -26,19 +31,30 @@ public class ExperimentalPlayerController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        rb.AddForce(heading * accel -(rb.velocity * drag));
+        rb.AddForce(-(rb.velocity * drag));
 
-        //check for max speeds X.
-        if(rb.velocity.x > maxSpeed) {
-            rb.velocity = new Vector3(maxSpeed, rb.velocity.y, rb.velocity.z);
-        } else if(rb.velocity.x < -maxSpeed) {
-            rb.velocity = new Vector3(-maxSpeed, rb.velocity.y, rb.velocity.z);
+        if (fuel > 0.0f) {
+            rb.AddForce(heading * accel);
+
+            //check for max speeds X.
+            if (rb.velocity.x > maxSpeed) {
+                rb.velocity = new Vector3(maxSpeed, rb.velocity.y, rb.velocity.z);
+            } else if (rb.velocity.x < -maxSpeed) {
+                rb.velocity = new Vector3(-maxSpeed, rb.velocity.y, rb.velocity.z);
+            }
+
+            //check for max speeds Z.
+            if (rb.velocity.z > maxSpeed) {
+                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, maxSpeed);
+            } else if (rb.velocity.z < -maxSpeed) {
+                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -maxSpeed);
+            }
+
+            fuel -= (heading).magnitude * fuelUsage;
         }
-        //check for max speeds Z.
-        if(rb.velocity.z > maxSpeed) {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, maxSpeed);
-        }else if(rb.velocity.z < -maxSpeed) {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -maxSpeed);
-        }
+    }
+
+    public void AddFuel(float fuel) {
+        this.fuel += fuel;
     }
 }
