@@ -23,6 +23,13 @@ public class ExperimentalPlayerController : MonoBehaviour {
 	private int peopleCapacity;
 	private List<GameObject> passengers;
 
+    [SerializeField]
+    private int numRings;
+    [SerializeField]
+    private int ringCapacity;
+    public GameObject Ring;
+    [SerializeField]
+    private List<GameObject> slots;
 
     // Use this for initialization
     void Start () {
@@ -38,6 +45,20 @@ public class ExperimentalPlayerController : MonoBehaviour {
         heading = new Vector3(x, 0.0f, z);
         transform.LookAt(this.transform.position + heading);
 		fuelUI.text = "fuel: " + fuel;
+        //LifeRings
+        if(numRings > 0 && Input.GetKeyDown("space")) {
+            //Create a new ring
+            GameObject temp = Instantiate<GameObject>(Ring, this.transform);
+            temp.transform.position = new Vector3(transform.position.x,transform.position.y+1, transform.position.z+3);
+            //Set ring's rotation to what we are facing.
+            temp.transform.LookAt(temp.transform.position + heading);
+            //Add our velocity, plus the acceleration constant. This should feel explosive and need tweeking.
+            temp.GetComponent<Rigidbody>().AddForce(Vector3.forward * accel);
+            numRings--;
+            
+
+        }
+
     }
 
     void FixedUpdate() {
@@ -71,7 +92,21 @@ public class ExperimentalPlayerController : MonoBehaviour {
 	public void AddPerson(GameObject person){
 		numPeople++;
 		passengers.Add (person);
-		person.transform.SetParent (this.transform);
+        
+        person.transform.SetParent (this.transform);
+        //Set the Slot's position
+        int loc = 0;
+        //Go through the list of Slots backward, Setting position as we go.
+        for(int i = slots.Count-1; i <= 0; i--) {
+            Debug.Log("HI");
+            if(passengers[loc] == null) {
+                Debug.Log("Position found: " + i);
+                loc = i;
+                Debug.Log("FUCK");
+            }
+            Debug.Log("BYE");
+        }
+        person.transform.position = slots[loc].transform.position;
 	}
 
 	public void RemovePerson(){

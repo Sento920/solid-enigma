@@ -13,7 +13,7 @@ public class LifeRingScript : MonoBehaviour {
     private Rigidbody rb;
     private string target_name;
     private Transform target;
-    private GameObject passenger;
+    //private GameObject passenger;
 
 	// Use this for initialization
 	void Start () {
