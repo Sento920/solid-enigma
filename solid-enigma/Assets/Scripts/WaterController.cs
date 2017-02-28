@@ -12,7 +12,7 @@ public class WaterController : MonoBehaviour {
     }
 
     void OnTriggerStay(Collider other) {
-        if(other.attachedRigidbody) {
+        if(other.attachedRigidbody && !other.isTrigger) {
             float force = 1.0f - ((other.transform.position.y - transform.position.y) / 5.0f);
 
             Vector3 forceVector = -Physics.gravity * other.attachedRigidbody.mass * (force - other.attachedRigidbody.velocity.y * bounceDamp);
