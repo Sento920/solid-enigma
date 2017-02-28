@@ -11,11 +11,16 @@ public class ExperimentalPlayerController : MonoBehaviour {
     private Rigidbody rb;
     private Vector3 heading;
 	public Text fuelUI;
+
+    public Text moneyUI;
     
 	[SerializeField]
     private float fuelUsage = 1.0f;
     [SerializeField]
     private float fuel = 100.0f;
+
+    [SerializeField]
+    public int money = 50;
 
 	[SerializeField]
 	private int numPeople;
@@ -31,11 +36,13 @@ public class ExperimentalPlayerController : MonoBehaviour {
     [SerializeField]
     private List<GameObject> slots;
 
+
     // Use this for initialization
     void Start () {
 		passengers = new List<GameObject> ();
         this.rb = GetComponent<Rigidbody>();
 		fuelUI.text = "fuel: " + fuel;
+        moneyUI.text = "money: " + money;
 	}
 
     // Update is called once per frame
@@ -45,8 +52,10 @@ public class ExperimentalPlayerController : MonoBehaviour {
         heading = new Vector3(x, 0.0f, z);
         transform.LookAt(this.transform.position + heading);
 		fuelUI.text = "fuel: " + fuel;
+         moneyUI.text = "money: " + money;
+        moneyUI.text = "money: " + money;
         //LifeRings
-        if(numRings > 0 && Input.GetKeyDown("space")) {
+        if (numRings > 0 && Input.GetKeyDown("space")) {
             //Create a new ring
             GameObject temp = Instantiate<GameObject>(Ring, this.transform);
             temp.transform.position = new Vector3(transform.position.x,transform.position.y+1, transform.position.z+3);
@@ -89,6 +98,12 @@ public class ExperimentalPlayerController : MonoBehaviour {
         this.fuel += fuel;
     }
 
+    public void AddMoney(int money)
+    {
+        this.money += money;
+    }
+    
+
 	public void AddPerson(GameObject person){
 		numPeople++;
 		passengers.Add (person);
@@ -116,5 +131,7 @@ public class ExperimentalPlayerController : MonoBehaviour {
 	public bool HasCapacity(){
 		return (peopleCapacity - numPeople) > 0;
 	}
+
+  
 
 }
