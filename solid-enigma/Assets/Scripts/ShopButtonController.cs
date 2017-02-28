@@ -21,18 +21,12 @@ public class ShopButtonController : MonoBehaviour {
 
     public void BuyFuel()
     {
-        if (PlayerBoat.GetComponent<ExperimentalPlayerController>().money > 0)
-        {
-            PlayerBoat.GetComponent<ExperimentalPlayerController>().AddFuel(100);
-            PlayerBoat.GetComponent<ExperimentalPlayerController>().AddMoney(-5);
-        }
-        else
-        {
+        if (PlayerBoat.GetComponent<PlayerController>().money > 0){
+            PlayerBoat.GetComponent<PlayerController>().AddFuel(100);
+            PlayerBoat.GetComponent<PlayerController>().AddMoney(-5);
+        }else {
             FuelButton.GetComponent<Button>().enabled = false;
         }
-
-
         //GameObject.Find("Fuel Button").GetComponent<Button>().enabled = false;
-
     }
 }

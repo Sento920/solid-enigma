@@ -22,7 +22,7 @@ public class FuelItemController : MonoBehaviour {
         if (other.tag == "player")
         {
             Debug.Log("Player Collected Fuel");
-            other.GetComponent<ExperimentalPlayerController>().AddFuel(containedFuel);
+            other.GetComponent<PlayerController>().AddFuel(containedFuel);
             Destroy(this.gameObject);
         }
     }

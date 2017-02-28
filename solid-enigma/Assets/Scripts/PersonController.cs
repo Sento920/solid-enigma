@@ -28,9 +28,7 @@ public class PersonController : MonoBehaviour {
 
     // On Trigger Enter is called Upon Entering a Trigger Area.
     void OnTriggerStay(Collider other) {
-		if(other.tag == "player" && other.GetComponent<ExperimentalPlayerController>().HasCapacity()) {
-            //Debug.Log("Player has entered the pick up area");
-            //Debug.Log( "Boat: " + target.position.ToString());
+		if(other.tag == "player" && other.GetComponent<PlayerController>().HasCapacity()) {
             Vector3 targetRotation = new Vector3 (target.position.x - this.transform.position.x, 0.0f, target.position.z - this.transform.position.z);
             //Debug.Log("target: " + targetRotation.ToString());
             float str = Mathf.Min(turn_strength * Time.deltaTime, 1);
@@ -51,7 +49,7 @@ public class PersonController : MonoBehaviour {
     void OnCollisionEnter(Collision other) {
         if(other.transform.tag == "player") {
             Debug.Log("We've found the boat.");
-			other.gameObject.GetComponent<ExperimentalPlayerController>().AddPerson(gameObject);
+			other.gameObject.GetComponent<PlayerController>().AddPerson(gameObject);
 			this.GetComponent<Rigidbody> ().isKinematic = true;
 			this.GetComponent<BoxCollider>().enabled = false;
 			this.GetComponent<CapsuleCollider>().enabled = false;

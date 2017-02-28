@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ExperimentalPlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
     
     public float maxSpeed = 10;
     public float accel = 150;
@@ -105,23 +105,17 @@ public class ExperimentalPlayerController : MonoBehaviour {
     
 
 	public void AddPerson(GameObject person){
-		numPeople++;
-		passengers.Add (person);
-        
-        person.transform.SetParent (this.transform);
-        //Set the Slot's position
-        int loc = 0;
-        //Go through the list of Slots backward, Setting position as we go.
-        for(int i = slots.Count-1; i <= 0; i--) {
-            Debug.Log("HI");
-            if(passengers[loc] == null) {
-                Debug.Log("Position found: " + i);
-                loc = i;
-                Debug.Log("FUCK");
-            }
-            Debug.Log("BYE");
-        }
-        person.transform.position = slots[loc].transform.position;
+		if (numPeople + 1 <= peopleCapacity) {
+			Debug.Log ("Passengers: " + passengers.Count + " Slots: " + slots.Count);
+			person.transform.SetParent (this.transform);
+			int loc = passengers.Count;
+			numPeople++;
+			passengers.Add (person);
+			person.transform.position = slots [loc].transform.position;
+		} else {
+			//life ring capacity
+
+		}
 	}
 
 	public void RemovePerson(){
