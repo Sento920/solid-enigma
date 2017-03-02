@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour {
     
 
 	public void AddPerson(GameObject person){
-		if (numPeople + 1 <= peopleCapacity) {
+		if (numPeople < peopleCapacity) {
 			Debug.Log ("Passengers: " + passengers.Count + " Slots: " + slots.Count);
 			person.transform.SetParent (this.transform);
 			int loc = passengers.Count;
@@ -119,12 +119,20 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void RemovePerson(){
-		numPeople--;
+        if (numPeople > 0) {
+            numPeople--;
+            Destroy(passengers[numPeople]);
+            passengers.Remove(passengers[numPeople]);
+        }
 	}
 
 	public bool HasCapacity(){
 		return (peopleCapacity - numPeople) > 0;
 	}
+
+    public int GetNumPassengers() {
+        return (numPeople);
+    }
 
   
 
