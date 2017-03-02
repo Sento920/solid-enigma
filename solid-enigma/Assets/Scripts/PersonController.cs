@@ -51,7 +51,7 @@ public class PersonController : MonoBehaviour {
             Debug.Log("We've found the boat.");
 			other.gameObject.GetComponent<PlayerController>().AddPerson(gameObject);
 			this.GetComponent<Rigidbody> ().isKinematic = true;
-			this.GetComponent<BoxCollider>().enabled = false;
+			this.GetComponent<SphereCollider>().enabled = false;
 			this.GetComponent<CapsuleCollider>().enabled = false;
 			this.enabled = false;
         }

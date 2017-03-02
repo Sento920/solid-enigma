@@ -50,7 +50,8 @@ public class PlayerController : MonoBehaviour {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
         heading = new Vector3(x, 0.0f, z);
-        transform.LookAt(this.transform.position + heading);
+		if(heading != Vector3.zero)
+        	transform.LookAt(this.transform.position + heading);
 		fuelUI.text = "fuel: " + fuel;
          moneyUI.text = "money: " + money;
         moneyUI.text = "money: " + money;
