@@ -32,7 +32,7 @@ public class RoundController : MonoBehaviour {
         if (state == GameState.Playing) {
 			gameCanvas.gameObject.SetActive(true);
             timeLeft -= Time.deltaTime;
-			playerRef.GetComponent<PlayerController>().enabled = true;
+			playerRef.GetComponent<PlayerController>().setActiveTime(true);
             float sunAngle = (timeLeft / (timeInMinutes * 60));
             sunAngle *= 180;
 
@@ -53,10 +53,10 @@ public class RoundController : MonoBehaviour {
 			shopCanvas.gameObject.SetActive(true);
 			//gameCanvas.gameObject.SetActive(false);
             // TODO: shop related things, if they apply...
-			playerRef.GetComponent<PlayerController>().enabled = false;
+			playerRef.GetComponent<PlayerController>().setActiveTime(false);
         } else if (state == GameState.Paused) {
             // look for unpause...
-			playerRef.GetComponent<PlayerController>().enabled = false;
+			playerRef.GetComponent<PlayerController>().setActiveTime(false);
         }
 	}
 

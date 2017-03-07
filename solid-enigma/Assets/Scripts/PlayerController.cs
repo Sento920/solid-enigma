@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject Ring;
     [SerializeField]
     private List<GameObject> slots;
+	private bool activeTime;
 
 
     // Use this for initialization
@@ -49,32 +50,34 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+		if (activeTime) {
+			float x = Input.GetAxis ("Horizontal");
+			float z = Input.GetAxis ("Vertical");
 
-        heading = new Vector3(x, 0.0f, z);
-        if (heading.magnitude > 1.0f)
-            heading.Normalize();
+			heading = new Vector3 (x, 0.0f, z);
+			if (heading.magnitude > 1.0f)
+				heading.Normalize ();
 
-		if(heading != Vector3.zero)
-        	transform.LookAt(this.transform.position + heading);
+			if (heading != Vector3.zero)
+				transform.LookAt (this.transform.position + heading);
+			
+			//LifeRings
+			if (numRings > 0 && Input.GetKeyDown ("space")) {
+				//Create a new ring
+				GameObject temp = Instantiate<GameObject> (Ring, this.GetBow (), transform.rotation);
+				temp.GetComponent<Rigidbody> ().AddForce (Vector3.forward * accel);
+				numRings--;
+			}
+		}
+
 		fuelUI.text = "fuel: " + fuel;
-         moneyUI.text = "money: " + money;
-        moneyUI.text = "money: " + money;
-        //LifeRings
-        if (numRings > 0 && Input.GetKeyDown("space")) {
-            //Create a new ring
-            GameObject temp = Instantiate<GameObject>(Ring,this.GetBow(),transform.rotation);
-            temp.GetComponent<Rigidbody>().AddForce(Vector3.forward * accel);
-            numRings--;
-        }
-
+		moneyUI.text = "money: " + money;
     }
 
     void FixedUpdate() {
         rb.AddForce(-(rb.velocity * drag));
 
-        if (fuel > 0.0f) {
+		if (activeTime && fuel > 0.0f) {
             rb.AddForce(heading * accel);
 
             //check for max speeds X.
@@ -122,6 +125,14 @@ public class PlayerController : MonoBehaviour {
         this.money += money;
     }
     
+	public bool getActiveTime(){
+		return activeTime;
+	}
+
+	public void setActiveTime(bool active){
+		activeTime = active;
+	}
+
 
 	public void AddPerson(GameObject person){
 		if (numPeople < peopleCapacity) {
