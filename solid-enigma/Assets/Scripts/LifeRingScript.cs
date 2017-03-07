@@ -12,27 +12,45 @@ public class LifeRingScript : MonoBehaviour {
 
     private Rigidbody rb;
     private string target_name;
-    private Transform target;
+    [SerializeField]
+    private Transform Anchor;
+    private SpringJoint joint;
+    [SerializeField]
+    private float delay;
+    private float time;
     //private GameObject passenger;
 
 	// Use this for initialization
 	void Start () {
         target_name = "PlayerBoat";
         rb = GetComponent<Rigidbody>();
-        target = GameObject.Find(target_name).transform;
+        /*
+        joint = GetComponent<SpringJoint>();
+        time = Time.time;
+        */
+        Anchor = GameObject.Find("PlayerBoat").transform;
+        
     }
-	
+	/*
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        if( Time.time > (time + delay) && Anchor.tag == "player") {
+            this.transform.position = new Vector3(transform.position.x,0.0f,transform.position.z);
+            joint.connectedBody = Anchor.GetComponent<Rigidbody>();
+        }
+    }
+    
+    */
 
     void OnCollisionEnter(Collision other) {
         //We'll make the other object a passenger.
         if(other.transform.tag == "civilian") {
-            // Pull them along with us.
-
+            // touch a person, put them in the boat.
+            Anchor.GetComponent<PlayerController>().AddPerson(other.gameObject);
+            Destroy(gameObject);
         }
+        ///if(other.transform.tag == "player" && other.gameObject.GetComponent<PlayerController>().HasCapacity()) 
+           
     }
 
 }

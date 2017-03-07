@@ -58,15 +58,9 @@ public class PlayerController : MonoBehaviour {
         //LifeRings
         if (numRings > 0 && Input.GetKeyDown("space")) {
             //Create a new ring
-            GameObject temp = Instantiate<GameObject>(Ring, this.transform);
-            temp.transform.position = new Vector3(transform.position.x,transform.position.y+1, transform.position.z+3);
-            //Set ring's rotation to what we are facing.
-            temp.transform.LookAt(temp.transform.position + heading);
-            //Add our velocity, plus the acceleration constant. This should feel explosive and need tweeking.
+            GameObject temp = Instantiate<GameObject>(Ring,this.GetBow(),transform.rotation);
             temp.GetComponent<Rigidbody>().AddForce(Vector3.forward * accel);
             numRings--;
-            
-
         }
 
     }
@@ -135,6 +129,8 @@ public class PlayerController : MonoBehaviour {
         return (numPeople);
     }
 
-  
+  public Vector3 GetBow() {
+        return new Vector3(transform.localPosition.x, 0f, transform.localPosition.z + 1.5f);
+    }
 
 }
