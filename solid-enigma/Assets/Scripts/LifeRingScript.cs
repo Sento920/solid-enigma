@@ -11,7 +11,6 @@ public class LifeRingScript : MonoBehaviour {
 
 
     private Rigidbody rb;
-    private string target_name;
     [SerializeField]
     private Transform Anchor;
     private SpringJoint joint;
@@ -22,7 +21,6 @@ public class LifeRingScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        target_name = "PlayerBoat";
         rb = GetComponent<Rigidbody>();
         /*
         joint = GetComponent<SpringJoint>();
