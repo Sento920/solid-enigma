@@ -88,6 +88,7 @@ public class RoundController : MonoBehaviour {
 	public void NewDay(){
 		shopCanvas.gameObject.SetActive(false);
 		gameCanvas.gameObject.SetActive(true);
+
 		ResetTimer();
 		StartTimer();
 	}

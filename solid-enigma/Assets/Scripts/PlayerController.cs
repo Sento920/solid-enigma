@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour {
     private float fuelUsage = 1.0f;
     [SerializeField]
     private float fuel = 100.0f;
+    [SerializeField]
+    public float fuelCapacity = 100.0f;
 
     [SerializeField]
     public int money = 50;
@@ -91,6 +93,24 @@ public class PlayerController : MonoBehaviour {
 
     public void AddFuel(float fuel) {
         this.fuel += fuel;
+        if (this.fuel > fuelCapacity)
+        {
+            SetFuel(fuelCapacity);
+        }
+    }
+
+    public float GetFuel()
+    {
+        return fuel;
+    }
+    public void SetFuel(float fuel)
+    {
+        this.fuel = fuel;
+    }
+
+    public float GetFuelCapacity()
+    {
+        return fuelCapacity;
     }
 
     public void AddMoney(int money)
