@@ -11,6 +11,8 @@ public class RoundController : MonoBehaviour {
     private GameState state = GameState.Paused;
 	[SerializeField]
 	private GameObject playerRef;
+    [SerializeField]
+    private GameObject spawnPosition;
 
     [SerializeField] private float timeInMinutes = 5;
     [SerializeField] private GameObject sun;
@@ -89,6 +91,7 @@ public class RoundController : MonoBehaviour {
 		shopCanvas.gameObject.SetActive(false);
 		gameCanvas.gameObject.SetActive(true);
         shopCanvas.GetComponent<ShopButtonController>().enableShopButtons();
+        playerRef.transform.position = spawnPosition.transform.position;
 		ResetTimer();
 		StartTimer();
 	}
