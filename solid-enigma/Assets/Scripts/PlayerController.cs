@@ -4,12 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
-    
+
     public float maxSpeed = 10;
     public float accel = 150;
+    public float paddleAccel = 10;
     public float drag = 10;
+    public float turnSpeed = 1.0f;
+
     private Rigidbody rb;
-    private Vector3 heading;
+
+    private Vector3 desiredHeading;
+    [SerializeField] private Vector3 heading;
+
 	public Text fuelUI;
 
     public Text moneyUI;
@@ -46,23 +52,24 @@ public class PlayerController : MonoBehaviour {
         this.rb = GetComponent<Rigidbody>();
 		fuelUI.text = "fuel: " + fuel;
         moneyUI.text = "money: " + money;
+
+        heading = Vector3.forward;
 	}
 
     // Update is called once per frame
     void Update() {
 		if (activeTime) {
-			float x = Input.GetAxis ("Horizontal");
+            // get desired movement vector
+            float x = Input.GetAxis ("Horizontal");
 			float z = Input.GetAxis ("Vertical");
 
-			heading = new Vector3 (x, 0.0f, z);
-			if (heading.magnitude > 1.0f)
-				heading.Normalize ();
+            desiredHeading = new Vector3(x, 0.0f, z);
 
-			if (heading != Vector3.zero)
-				transform.LookAt (this.transform.position + heading);
-			
-			//LifeRings
-			if (numRings > 0 && Input.GetKeyDown ("space")) {
+            if (desiredHeading.magnitude > 1.0f)
+                desiredHeading.Normalize();
+
+            //LifeRings
+            if (numRings > 0 && Input.GetKeyDown ("space")) {
 				//Create a new ring
 				GameObject temp = Instantiate<GameObject> (Ring, this.GetBow (), transform.rotation);
 				temp.GetComponent<Rigidbody> ().AddForce (Vector3.forward * accel);
@@ -74,11 +81,44 @@ public class PlayerController : MonoBehaviour {
 		moneyUI.text = "money: " + money;
     }
 
+    private float getAngle(Vector3 vec) {
+        float negative = 1.0f;
+
+        if (vec.x < 0.0f)
+            negative *= -1.0f;
+
+        return Vector3.Angle(Vector3.forward, vec.normalized) * negative;
+    }
+
     void FixedUpdate() {
         rb.AddForce(-(rb.velocity * drag));
 
-		if (activeTime && fuel > 0.0f) {
-            rb.AddForce(heading * accel);
+        if (activeTime) {
+            // normalize vector, compare angle between current and desired headings
+            if (desiredHeading != Vector3.zero) {
+                float deltangle = getAngle(desiredHeading) - getAngle(heading); // deltangle is the change in angle on this update
+
+                // if deltangle is greater than 180 degrees, turn the other way, dingus
+                if (deltangle >= 180.0f)
+                    deltangle -= 360.0f;
+                if (deltangle < -180.0f)
+                    deltangle += 360.0f;
+
+                deltangle = Mathf.Clamp(deltangle / turnSpeed, -1.0f, 1.0f) * turnSpeed;
+
+                float curAngle = getAngle(heading);   // not to be confused with wwe superstar kurt angle
+
+                heading = new Vector3(Mathf.Sin(Mathf.Deg2Rad * (curAngle + deltangle)), 0.0f, Mathf.Cos(Mathf.Deg2Rad * (curAngle + deltangle)));
+
+                transform.LookAt(this.transform.position + heading);
+            }
+
+            Vector3 movement = heading * desiredHeading.magnitude;
+
+            if (fuel > 0)
+                rb.AddForce(movement * accel);
+            else
+                rb.AddForce(movement * paddleAccel);
 
             //check for max speeds X.
             if (rb.velocity.x > maxSpeed) {
@@ -94,7 +134,8 @@ public class PlayerController : MonoBehaviour {
                 rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -maxSpeed);
             }
 
-            fuel -= (heading).magnitude * fuelUsage;
+            if (fuel > 0)
+                fuel -= (movement).magnitude * fuelUsage;
         }
     }
 
