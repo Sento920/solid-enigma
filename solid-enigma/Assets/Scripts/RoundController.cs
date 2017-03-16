@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class RoundController : MonoBehaviour {
 
@@ -18,14 +19,16 @@ public class RoundController : MonoBehaviour {
     [SerializeField] private GameObject sun;
     [SerializeField] private CanvasGroup shopCanvas;
 	[SerializeField] private CanvasGroup gameCanvas;
-	[SerializeField] private Text timerText;
+    [SerializeField] private CanvasGroup pauseCanvas;
+    [SerializeField] private Text timerText;
 
     // Use this for initialization
     void Start () {
         ResetTimer();
         StartTimer();
 		shopCanvas.gameObject.SetActive(false);
-	}
+        pauseCanvas.gameObject.SetActive(false);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -40,6 +43,13 @@ public class RoundController : MonoBehaviour {
 
             //Debug.Log(getTime());
 			timerText.text = getTime();
+
+            if ((Input.GetKeyDown(KeyCode.Escape) == true))
+            {   
+                pauseCanvas.gameObject.SetActive(true);
+                Time.timeScale = 0;
+                state = GameState.Paused;
+            } 
 
             if (timeLeft <= 0.0f) {
                 PauseTimer();
@@ -56,7 +66,14 @@ public class RoundController : MonoBehaviour {
 			playerRef.GetComponent<PlayerController>().setActiveTime(false);
         } else if (state == GameState.Paused) {
             // look for unpause...
-			playerRef.GetComponent<PlayerController>().setActiveTime(false);
+            playerRef.GetComponent<PlayerController>().setActiveTime(false);
+            if ((Input.GetKeyDown(KeyCode.Escape) == true))
+            {
+                pauseCanvas.gameObject.SetActive(false);
+                Time.timeScale = 1;
+                state = GameState.Playing;
+            }
+
         }
 	}
 
@@ -95,4 +112,19 @@ public class RoundController : MonoBehaviour {
 		ResetTimer();
 		StartTimer();
 	}
+
+    public void Resume()
+    {
+        pauseCanvas.gameObject.SetActive(false);
+        Time.timeScale = 1;
+        state = GameState.Playing;
+    }
+
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        state = GameState.Playing;
+        Time.timeScale = 1;
+    }
 }
