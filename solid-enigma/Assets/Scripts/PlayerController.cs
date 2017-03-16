@@ -133,9 +133,8 @@ public class PlayerController : MonoBehaviour {
             } else if (rb.velocity.z < -maxSpeed) {
                 rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -maxSpeed);
             }
-
-            if (fuel > 0)
-                fuel -= (movement).magnitude * fuelUsage;
+				
+			fuel = Mathf.Max(fuel - ((movement).magnitude * fuelUsage), 0.0f);
         }
     }
 

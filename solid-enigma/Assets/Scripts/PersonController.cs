@@ -21,7 +21,8 @@ public class PersonController : MonoBehaviour {
 
     void FixedUpdate() {
         if(move) {
-            rb.velocity = rb.transform.forward;
+			rb.velocity = new Vector3(rb.transform.forward.x, rb.velocity.y, rb.transform.forward.z);
+			Debug.Log (rb.velocity);
         }
 
     }
@@ -48,7 +49,7 @@ public class PersonController : MonoBehaviour {
 
     void OnCollisionEnter(Collision other) {
         if(other.transform.tag == "player") {
-            Debug.Log("We've found the boat.");
+            //Debug.Log("We've found the boat.");
 			other.gameObject.GetComponent<PlayerController>().AddPerson(gameObject);
 			this.GetComponent<Rigidbody> ().isKinematic = true;
 			this.GetComponent<SphereCollider>().enabled = false;
