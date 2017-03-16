@@ -22,6 +22,7 @@ public class EvacController : MonoBehaviour {
             while (p.GetNumPassengers() > 0) {
                 p.RemovePerson();
                 Debug.Log("Evacuated a person!");
+                p.AddMoney(5);
             }
         }
     }
