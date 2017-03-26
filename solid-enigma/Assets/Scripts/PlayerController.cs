@@ -44,7 +44,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private List<GameObject> slots;
 	private bool activeTime;
-
+    [SerializeField]
+    private GameObject Bow;
 
     // Use this for initialization
     void Start () {
@@ -70,9 +71,10 @@ public class PlayerController : MonoBehaviour {
 
             //LifeRings
             if (numRings > 0 && Input.GetKeyDown ("space")) {
-				//Create a new ring
-				GameObject temp = Instantiate<GameObject> (Ring, this.GetBow (), transform.rotation);
-				temp.GetComponent<Rigidbody> ().AddForce (Vector3.forward * accel);
+                //Create a new ring
+                //new Vector3(transform.position.x  + desiredHeading.x,0f, transform.position.z + desiredHeading.z)
+                GameObject temp = Instantiate<GameObject> (Ring,Bow.transform.position, transform.rotation);
+				temp.GetComponent<Rigidbody> ().AddForce (temp.GetComponent<Rigidbody>().transform.forward * accel * 5f);
 				numRings--;
 			}
 		}
@@ -204,8 +206,8 @@ public class PlayerController : MonoBehaviour {
         return (numPeople);
     }
 
-  public Vector3 GetBow() {
-        return new Vector3(transform.localPosition.x, 0f, transform.localPosition.z + 1.5f);
+    public void AddRing() {
+        numRings++;
     }
 
 }

@@ -17,28 +17,19 @@ public class LifeRingScript : MonoBehaviour {
     [SerializeField]
     private float delay;
     private float time;
+    private bool hasPerson;
     //private GameObject passenger;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
-        /*
-        joint = GetComponent<SpringJoint>();
-        time = Time.time;
-        */
+        //Has person is for if we decide to implement carrying people behind the boat.
+        //Note: That Feature will be a pain to do correctly thanks to the difficult/expensive part of making psudo-ropes. 
+        hasPerson = false;
+    
         Anchor = GameObject.Find("PlayerBoat").transform;
         
     }
-	/*
-	// Update is called once per frame
-	void Update () {
-        if( Time.time > (time + delay) && Anchor.tag == "player") {
-            this.transform.position = new Vector3(transform.position.x,0.0f,transform.position.z);
-            joint.connectedBody = Anchor.GetComponent<Rigidbody>();
-        }
-    }
-    
-    */
 
     void OnCollisionEnter(Collision other) {
         //We'll make the other object a passenger.
@@ -46,8 +37,14 @@ public class LifeRingScript : MonoBehaviour {
             // touch a person, put them in the boat.
             Anchor.GetComponent<PlayerController>().AddPerson(other.gameObject);
             Destroy(gameObject);
-        }
-        ///if(other.transform.tag == "player" && other.gameObject.GetComponent<PlayerController>().HasCapacity()) 
+        }else if(other.transform.tag == "player") {
+            if(hasPerson) {
+                Debug.Log("This should never print.");
+            } else {
+                // We've collided with our empty ring, pick it up.
+                Anchor.GetComponent<PlayerController>().AddRing();
+            }
+        } 
            
     }
 
