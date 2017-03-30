@@ -127,4 +127,9 @@ public class RoundController : MonoBehaviour {
         state = GameState.Playing;
         Time.timeScale = 1;
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

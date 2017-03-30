@@ -25,7 +25,7 @@ public class ShopButtonController : MonoBehaviour {
             PlayerBoat.GetComponent<PlayerController>().AddFuel(100);
             PlayerBoat.GetComponent<PlayerController>().AddMoney(-5);
 
-            if(PlayerBoat.GetComponent<PlayerController>().GetFuel() > PlayerBoat.GetComponent<PlayerController>().GetFuelCapacity())
+            if(PlayerBoat.GetComponent<PlayerController>().GetFuel() >= PlayerBoat.GetComponent<PlayerController>().GetFuelCapacity())
             {
                 PlayerBoat.GetComponent<PlayerController>().SetFuel(PlayerBoat.GetComponent<PlayerController>().fuelCapacity);
                 FuelButton.GetComponent<Button>().enabled = false;
@@ -40,11 +40,19 @@ public class ShopButtonController : MonoBehaviour {
     public void BuyFuelCapacityUpgrade()
     {
         PlayerBoat.GetComponent<PlayerController>().fuelCapacity += 100;
-        FuelButton.enabled = true;
+        PlayerBoat.GetComponent<PlayerController>().AddFuel(100);
+        //FuelButton.enabled = true;
     }
 
     public void enableShopButtons()
     {
         FuelButton.enabled = true;
+    }
+
+    public void BuySpeedUpgrade()
+    {
+        PlayerBoat.GetComponent<PlayerController>().maxSpeed += 10;
+        PlayerBoat.GetComponent<PlayerController>().accel += 50;
+        PlayerBoat.GetComponent<PlayerController>().AddMoney(-5);
     }
 }
