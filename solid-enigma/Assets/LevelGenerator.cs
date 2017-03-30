@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour {
     [SerializeField] private GameObject tile;
+	[SerializeField] private float tileWidth = 10;
+	[SerializeField] private float tileLength = 10;
     [SerializeField] private int width = 200;
     [SerializeField] private int height = 100;
 
@@ -20,15 +22,16 @@ public class LevelGenerator : MonoBehaviour {
 	}
 
     void RecursiveGenerateStreets(int startx, int endx, int starty, int endy, bool vertical) {
-        if (((endx - startx <= 2 && endy - starty <= 8) || (endy - starty <= 2 && endx - startx <= 8)))
+        //if (((endx - startx <= 2 && endy - starty <= 8) || (endy - starty <= 2 && endx - startx <= 8)))
+		if ((endx - startx <= 2) || (endy - starty <= 2))
             return;
 
         int splitRoad;
 
         if (vertical)
-            splitRoad = Random.Range(startx, endx - 1);
+            splitRoad = Random.Range(startx+1, endx);
         else
-            splitRoad = Random.Range(starty, endy - 1);
+            splitRoad = Random.Range(starty+1, endy);
 
         // fill road
         if (vertical) {
@@ -61,7 +64,7 @@ public class LevelGenerator : MonoBehaviour {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (map[(width * y) + x] == 1)
-                    Instantiate(tile, new Vector3(x, 0, y), Quaternion.identity);
+                    Instantiate(tile, new Vector3(x * tileWidth, 0, y * tileLength), Quaternion.identity);
             }
         }
     }
