@@ -9,8 +9,6 @@ public class GaugeScript : MonoBehaviour {
     //http://www.twodee.org/blog/?p=13668
 
 	[SerializeField]
-	private Image background;
-	[SerializeField]
 	private Image Indicator;
 	[SerializeField]
     private float target;
@@ -21,6 +19,12 @@ public class GaugeScript : MonoBehaviour {
     private float minVal;
 	// Use this for initialization
 	void Start () {
+        //Grabs the Sprite, converts the size to Pixels and then uses the pixels + Sprite's pivot to set the correct pivot for the RectTransform.
+        Vector2 size = GetComponent<RectTransform>().sizeDelta;
+        size *= GetComponent<Image>().pixelsPerUnit;
+        Vector2 pixelPivot = GetComponent<Image>().sprite.pivot;
+        Vector2 percentPivot = new Vector2(pixelPivot.x / size.x, pixelPivot.y / size.y);
+        GetComponent<RectTransform>().pivot = percentPivot;
         target = 0;
 	}
 	
@@ -35,4 +39,11 @@ public class GaugeScript : MonoBehaviour {
 		this.target = target;
 	}
 
+    public void SetMaxValue(float max) {
+        this.maxVal = max;
+    }
+
+    public void SetMinValue(float min) {
+        this.minVal = min;
+    }
 }

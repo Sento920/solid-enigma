@@ -19,7 +19,9 @@ public class PlayerController : MonoBehaviour {
 	public Text fuelUI;
 
     public Text moneyUI;
-    
+
+    private GaugeScript fuelGauge;
+
 	[SerializeField]
     private float fuelUsage = 1.0f;
     [SerializeField]
@@ -53,6 +55,8 @@ public class PlayerController : MonoBehaviour {
         this.rb = GetComponent<Rigidbody>();
 		fuelUI.text = "fuel: " + fuel;
         moneyUI.text = "money: " + money;
+        fuelGauge.SetMaxValue(fuelCapacity);
+        fuelGauge.SetMinValue(0f);
 
         heading = Vector3.forward;
 	}
