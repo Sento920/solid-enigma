@@ -12,8 +12,12 @@ public class LevelGenerator : MonoBehaviour {
 
     private int[] map;
 
-	// Use this for initialization
-	void Start () {
+ 
+    [SerializeField]
+    private GameObject fuel;
+
+    // Use this for initialization
+    void Start () {
         GenerateLevel();
 	}
 	
@@ -69,8 +73,20 @@ public class LevelGenerator : MonoBehaviour {
                 if (map[(width * y) + x] == 1)
                     Instantiate(tiles[Random.Range(0, tiles.Length)], new Vector3((x * tileWidth) - (tileWidth * width) / 2, gameObject.transform.position.y, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
                 else if (map[(width * y) + x] == 2)
+
                     Instantiate(evac, new Vector3((x * tileWidth) - (tileWidth * width) / 2, gameObject.transform.position.y, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
+                else
+                {
+                    int rand = Random.Range(0, 8);
+
+                    if (rand == 0) { 
+
+                    Instantiate(fuel, new Vector3((x * tileWidth) - (tileWidth * width) / 2, 0, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
+                    }
+                }
             }
         }
+
+
     }
 }
