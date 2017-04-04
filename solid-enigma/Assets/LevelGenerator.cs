@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour {
-    [SerializeField] private GameObject tile;
+    [SerializeField] private GameObject[] tiles;
+    [SerializeField] private GameObject evac;
 	[SerializeField] private float tileWidth = 10;
 	[SerializeField] private float tileLength = 10;
     [SerializeField] private int width = 200;
@@ -61,10 +62,14 @@ public class LevelGenerator : MonoBehaviour {
 
         RecursiveGenerateStreets(0, width, 0, height, true);
 
+        map[(width * (height / 2)) + (width / 2)] = 2;
+
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (map[(width * y) + x] == 1)
-                    Instantiate(tile, new Vector3(x * tileWidth, 0, y * tileLength), Quaternion.identity);
+                    Instantiate(tiles[Random.Range(0, tiles.Length)], new Vector3((x * tileWidth) - (tileWidth * width) / 2, gameObject.transform.position.y, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
+                else if (map[(width * y) + x] == 2)
+                    Instantiate(evac, new Vector3((x * tileWidth) - (tileWidth * width) / 2, gameObject.transform.position.y, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
             }
         }
     }
