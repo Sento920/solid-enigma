@@ -5,38 +5,39 @@ using UnityEngine;
 public class LevelGenerator : MonoBehaviour {
     [SerializeField] private GameObject[] tiles;
     [SerializeField] private GameObject evac;
-	[SerializeField] private float tileWidth = 10;
-	[SerializeField] private float tileLength = 10;
+    [SerializeField] private float tileWidth = 10;
+    [SerializeField] private float tileLength = 10;
     [SerializeField] private int width = 200;
     [SerializeField] private int height = 100;
+    [SerializeField] private int fuelNum = 100;
 
     private int[] map;
 
- 
+
     [SerializeField]
     private GameObject fuel;
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         GenerateLevel();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+    }
 
     void RecursiveGenerateStreets(int startx, int endx, int starty, int endy, bool vertical) {
         //if (((endx - startx <= 2 && endy - starty <= 8) || (endy - starty <= 2 && endx - startx <= 8)))
-		if ((endx - startx <= 2) || (endy - starty <= 2))
+        if ((endx - startx <= 2) || (endy - starty <= 2))
             return;
 
         int splitRoad;
 
         if (vertical)
-            splitRoad = Random.Range(startx+1, endx);
+            splitRoad = Random.Range(startx + 1, endx);
         else
-            splitRoad = Random.Range(starty+1, endy);
+            splitRoad = Random.Range(starty + 1, endy);
 
         // fill road
         if (vertical) {
@@ -73,20 +74,27 @@ public class LevelGenerator : MonoBehaviour {
                 if (map[(width * y) + x] == 1)
                     Instantiate(tiles[Random.Range(0, tiles.Length)], new Vector3((x * tileWidth) - (tileWidth * width) / 2, gameObject.transform.position.y, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
                 else if (map[(width * y) + x] == 2)
-
                     Instantiate(evac, new Vector3((x * tileWidth) - (tileWidth * width) / 2, gameObject.transform.position.y, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
-                else
-                {
-                    int rand = Random.Range(0, 8);
-
-                    if (rand == 0) { 
-
-                    Instantiate(fuel, new Vector3((x * tileWidth) - (tileWidth * width) / 2, 0, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
-                    }
-                }
             }
         }
 
+
+
+        List<int> integers = new List<int>();
+        for (int i = 0; i < map.Length; i++) {
+            if (map[i] == 0)
+            {
+                integers.Add(i);
+            }
+        }
+        for (int i = 0; i < fuelNum || integers.Count == 0; i++)
+        {
+            int rand = Random.Range(0, integers.Count);
+            int x = integers[rand] %  height;
+            int y = integers[rand] / width;
+            integers.Remove(rand);
+            Instantiate(fuel, new Vector3((x * tileWidth) - (tileWidth * width) / 2, 1, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
+        }
 
     }
 }
