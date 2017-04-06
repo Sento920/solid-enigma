@@ -46,6 +46,8 @@
 			wz /= 4;
 
 			v.vertex.y += (wx + wz) * 2;
+
+
 		}
 
 		void surf (Input IN, inout SurfaceOutputStandard o) {

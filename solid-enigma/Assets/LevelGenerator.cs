@@ -72,8 +72,12 @@ public class LevelGenerator : MonoBehaviour {
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if (map[(width * y) + x] == 1)
-                    Instantiate(tiles[Random.Range(0, tiles.Length)], new Vector3((x * tileWidth) - (tileWidth * width) / 2, gameObject.transform.position.y, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
+				if (map [(width * y) + x] == 1) {
+					GameObject o = Instantiate (tiles [Random.Range (0, tiles.Length)], new Vector3 ((x * tileWidth) - (tileWidth * width) / 2, gameObject.transform.position.y, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
+					PersonSpawner p = o.GetComponent<PersonSpawner> ();
+					if (p != null)
+						p.SpawnPerson ();
+				}
                 else if (map[(width * y) + x] == 2)
                     Instantiate(evac, new Vector3((x * tileWidth) - (tileWidth * width) / 2, gameObject.transform.position.y, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
             }
@@ -94,7 +98,10 @@ public class LevelGenerator : MonoBehaviour {
             int x = integers[rand] %  height;
             int y = integers[rand] / width;
             integers.Remove(rand);
-            Instantiate(fuel, new Vector3((x * tileWidth) - (tileWidth * width) / 2, 1, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
+
+			Vector3 pos = Random.insideUnitSphere * 10.0f;
+
+			Instantiate(fuel, new Vector3(((x * tileWidth) - (tileWidth * width) / 2) + pos.x, 1, ((y * tileLength) - (tileLength * height) / 2) + pos.z), Quaternion.identity);
         }
 
     }

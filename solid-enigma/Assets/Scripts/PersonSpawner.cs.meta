@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 577f7d582b1822845bb9aeb0d064a05b
+timeCreated: 1491495482
+licenseType: Pro
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - person: {fileID: 1187449968367432, guid: 759b126ff3c09e848ac98b8ee3eeb62c, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
