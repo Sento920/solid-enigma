@@ -10,6 +10,7 @@ public class LevelGenerator : MonoBehaviour {
     [SerializeField] private int width = 200;
     [SerializeField] private int height = 100;
     [SerializeField] private int fuelNum = 100;
+    [SerializeField] private int numOfPeople = 50;
 
     private int[] map;
 
