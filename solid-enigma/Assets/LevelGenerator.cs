@@ -10,7 +10,7 @@ public class LevelGenerator : MonoBehaviour {
     [SerializeField] private int width = 200;
     [SerializeField] private int height = 100;
     [SerializeField] private int fuelNum = 100;
-    [SerializeField] private int numOfPeople = 50;
+    [SerializeField] private int peopleNum = 50;
 
     private int[] map;
 
@@ -75,8 +75,9 @@ public class LevelGenerator : MonoBehaviour {
 				if (map [(width * y) + x] == 1) {
 					GameObject o = Instantiate (tiles [Random.Range (0, tiles.Length)], new Vector3 ((x * tileWidth) - (tileWidth * width) / 2, gameObject.transform.position.y, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
 					PersonSpawner p = o.GetComponent<PersonSpawner> ();
-					if (p != null)
-						p.SpawnPerson ();
+                    for (int i = 0; i < peopleNum; i++) {
+                        p.SpawnPerson();
+                    }
 				}
                 else if (map[(width * y) + x] == 2)
                     Instantiate(evac, new Vector3((x * tileWidth) - (tileWidth * width) / 2, gameObject.transform.position.y, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
