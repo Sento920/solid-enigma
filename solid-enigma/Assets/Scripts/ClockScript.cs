@@ -29,7 +29,7 @@ public class ClockScript : MonoBehaviour {
     void Update() {
         angle = Mathf.Clamp(target, minVal, maxVal);
         angle = ((target / maxVal)) * 360;
-        Debug.Log("MAX: " + maxVal + " MIN: " + minVal + " TARGET: " + target + " Angle: " + angle);
+        //Debug.Log("MAX: " + maxVal + " MIN: " + minVal + " TARGET: " + target + " Angle: " + angle);
         //transform target to Angle~!
 
         Indicator.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));

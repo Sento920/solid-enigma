@@ -9,6 +9,7 @@ public class PersonController : MonoBehaviour {
     public string target_name;
     [SerializeField]
     private Transform target;
+	[SerializeField] private Collider trigger;
     public float turn_strength;
     bool move;
 
@@ -22,9 +23,17 @@ public class PersonController : MonoBehaviour {
     void FixedUpdate() {
         if(move) {
 			rb.velocity = new Vector3(rb.transform.forward.x, rb.velocity.y, rb.transform.forward.z);
-			Debug.Log (rb.velocity);
+			//Debug.Log (rb.velocity);
         }
-
+		float distX = this.transform.position.x - target.position.x;
+		float distZ = this.transform.position.z - target.position.z;
+		if ((distX > 10 || distX < -10) && (distZ > 10 || distZ < -10)) {
+			rb.isKinematic = true;
+			trigger.enabled = false;
+		} else {
+			rb.isKinematic = false;
+			trigger.enabled = true;
+		}
     }
 
     // On Trigger Enter is called Upon Entering a Trigger Area.

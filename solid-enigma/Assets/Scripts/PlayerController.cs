@@ -183,8 +183,8 @@ public class PlayerController : MonoBehaviour {
 
 
 	public void AddPerson(GameObject person){
-		if (numPeople < peopleCapacity) {
-			Debug.Log ("Passengers: " + passengers.Count + " Slots: " + slots.Count);
+		if (numPeople <= peopleCapacity) {
+			Debug.Log ("Passengers: " + (passengers.Count +1) + " Slots: " + slots.Count +" PeepCaP: " + peopleCapacity + " NumPeople: " + numPeople);
 			person.transform.SetParent (this.transform);
 			int loc = passengers.Count;
 			numPeople++;

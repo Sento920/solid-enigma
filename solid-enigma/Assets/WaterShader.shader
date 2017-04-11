@@ -45,7 +45,7 @@
 			wz += sin((vertexWorld.z * _Time * 0.015 * 2) + 266.217);
 			wz /= 8;
 
-			v.vertex.y += (wx + wz) - 1;
+			v.vertex.y += (wx + wz) - 0.5;
 
 
 		}
