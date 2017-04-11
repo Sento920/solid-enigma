@@ -11,7 +11,7 @@
 		
 		CGPROGRAM
 		// Physically based Standard lighting model, and enable shadows on all light types
-		#pragma surface surf Standard fullforwardshadows vertex:vert
+		#pragma surface surf Standard fullforwardshadows addshadow vertex:vert
 
 		// Use shader model 3.0 target, to get nicer looking lighting
 		#pragma target 3.0
@@ -31,21 +31,21 @@
 
 			// x waves
 			float wx = 0;
-			wx += sin((vertexWorld.x * _Time * 0.026) + 22.147);
-			wx += sin((vertexWorld.x * _Time * 0.023) + 34.523);
-			wx += sin((vertexWorld.x * _Time * 0.017) + 53.344);
-			wx += sin((vertexWorld.x * _Time * 0.012) + 23.153);
-			wx /= 4;
+			wx += sin((vertexWorld.x * _Time * 0.026 * 2) + 22.147);
+			wx += sin((vertexWorld.x * _Time * 0.023 * 2) + 34.523);
+			wx += sin((vertexWorld.x * _Time * 0.017 * 2) + 53.344);
+			wx += sin((vertexWorld.x * _Time * 0.012 * 2) + 23.153);
+			wx /= 8;
 
 			// z waves
 			float wz = 0;
-			wz += sin((vertexWorld.z * _Time * 0.024) + 5.623);
-			wz += sin((vertexWorld.z * _Time * 0.028) + 26.726);
-			wz += sin((vertexWorld.z * _Time * 0.013) + 34.592);
-			wz += sin((vertexWorld.z * _Time * 0.015) + 266.217);
-			wz /= 4;
+			wz += sin((vertexWorld.z * _Time * 0.024 * 2) + 5.623);
+			wz += sin((vertexWorld.z * _Time * 0.028 * 2) + 26.726);
+			wz += sin((vertexWorld.z * _Time * 0.013 * 2) + 34.592);
+			wz += sin((vertexWorld.z * _Time * 0.015 * 2) + 266.217);
+			wz /= 8;
 
-			v.vertex.y += (wx + wz) * 2;
+			v.vertex.y += (wx + wz) - 1;
 
 
 		}
