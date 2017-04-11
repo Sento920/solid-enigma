@@ -17,25 +17,33 @@ public class GaugeScript : MonoBehaviour {
     private float maxVal;
     [SerializeField]
     private float minVal;
+    private float maxAngle;
+    private float minAngle;
+    
+
 	// Use this for initialization
 	void Start () {
         //Grabs the Sprite, converts the size to Pixels and then uses the pixels + Sprite's pivot to set the correct pivot for the RectTransform.
-        Vector2 size = GetComponent<RectTransform>().sizeDelta;
-        size *= GetComponent<Image>().pixelsPerUnit;
-        Vector2 pixelPivot = GetComponent<Image>().sprite.pivot;
-        Vector2 percentPivot = new Vector2(pixelPivot.x / size.x, pixelPivot.y / size.y);
-        GetComponent<RectTransform>().pivot = percentPivot;
         target = 0;
+        minAngle = 180;
+        maxAngle = -90;
+        angle = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		angle = Mathf.Clamp(minVal,maxVal,target);
+	    angle = Mathf.Clamp(target, minVal, maxVal);
+        angle =  ((maxAngle - minAngle) * (target / maxVal) -180);
+        //Debug.Log("MAX: " + maxVal + " MIN: " + minVal + " TARGET: " + target + " Angle: " + angle);
+        //transform target to Angle~!
+
 		Indicator.transform.rotation = Quaternion.Euler (new Vector3(0f,0f,angle));
+        //Debug.Log("Rotation: " + Indicator.transform.rotation);
 
 	}
 
 	public void SetTargetValue(float target){
+        //Debug.Log("TARGET SET TO: " + target);
 		this.target = target;
 	}
 

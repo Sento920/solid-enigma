@@ -14,6 +14,8 @@ public class RoundController : MonoBehaviour {
 	private GameObject playerRef;
     [SerializeField]
     private GameObject spawnPosition;
+    [SerializeField]
+    private GameObject clockRef;
 
     [SerializeField] private float timeInMinutes = 5;
     [SerializeField] private GameObject sun;
@@ -28,6 +30,8 @@ public class RoundController : MonoBehaviour {
         StartTimer();
 		shopCanvas.gameObject.SetActive(false);
         pauseCanvas.gameObject.SetActive(false);
+        clockRef.GetComponent<ClockScript>().SetMaxValue(timeLeft);
+        clockRef.GetComponent<ClockScript>().SetMinValue(0);
     }
 	
 	// Update is called once per frame
@@ -43,7 +47,7 @@ public class RoundController : MonoBehaviour {
 
             //Debug.Log(getTime());
 			timerText.text = getTime();
-
+            clockRef.GetComponent<ClockScript>().SetTargetValue(timeLeft);
             if ((Input.GetKeyDown(KeyCode.Escape) == true))
             {   
                 pauseCanvas.gameObject.SetActive(true);
@@ -79,6 +83,8 @@ public class RoundController : MonoBehaviour {
 
     void ResetTimer () {
         timeLeft = 60.0f * timeInMinutes;
+        clockRef.GetComponent<ClockScript>().SetMaxValue(timeLeft);
+        clockRef.GetComponent<ClockScript>().SetMinValue(0);
     }
 
     void StartTimer () {

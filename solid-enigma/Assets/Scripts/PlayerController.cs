@@ -16,11 +16,12 @@ public class PlayerController : MonoBehaviour {
     private Vector3 desiredHeading;
     [SerializeField] private Vector3 heading;
 
-	public Text fuelUI;
+	//public Text fuelUI;
 
     public Text moneyUI;
 
-    private GaugeScript fuelGauge;
+    [SerializeField]
+    private GameObject fuelGauge;
 
 	[SerializeField]
     private float fuelUsage = 1.0f;
@@ -53,11 +54,9 @@ public class PlayerController : MonoBehaviour {
     void Start () {
 		passengers = new List<GameObject> ();
         this.rb = GetComponent<Rigidbody>();
-		fuelUI.text = "fuel: " + fuel;
+		//fuelUI.text = "fuel: " + fuel;
         moneyUI.text = "money: " + money;
-        fuelGauge.SetMaxValue(fuelCapacity);
-        fuelGauge.SetMinValue(0f);
-
+        UpdateFuelGauge();
         heading = Vector3.forward;
 	}
 
@@ -81,9 +80,11 @@ public class PlayerController : MonoBehaviour {
 				temp.GetComponent<Rigidbody> ().AddForce (temp.GetComponent<Rigidbody>().transform.forward * accel * 5f);
 				numRings--;
 			}
-		}
+        } else {
+            UpdateFuelGauge();
+        }
 
-		fuelUI.text = "fuel: " + fuel;
+		//fuelUI.text = "fuel: " + fuel;
 		moneyUI.text = "money: " + money;
     }
 
@@ -141,6 +142,7 @@ public class PlayerController : MonoBehaviour {
             }
 				
 			fuel = Mathf.Max(fuel - ((movement).magnitude * fuelUsage), 0.0f);
+            fuelGauge.GetComponent<GaugeScript>().SetTargetValue(fuel);
         }
     }
 
@@ -212,6 +214,11 @@ public class PlayerController : MonoBehaviour {
 
     public void AddRing() {
         numRings++;
+    }
+
+    private void UpdateFuelGauge() {
+        fuelGauge.GetComponent<GaugeScript>().SetMaxValue(fuelCapacity);
+        fuelGauge.GetComponent<GaugeScript>().SetMinValue(0f);
     }
 
 }
