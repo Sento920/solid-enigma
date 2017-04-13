@@ -77,7 +77,7 @@ public class ShopButtonController : MonoBehaviour
     {
         if (PlayerBoat.GetComponent<PlayerController>().money > 0)
         {
-            PlayerBoat.GetComponent<PlayerController>().maxSpeed += 10;
+            PlayerBoat.GetComponent<PlayerController>().maxSpeed += .5f;
             PlayerBoat.GetComponent<PlayerController>().accel += 50;
             PlayerBoat.GetComponent<PlayerController>().AddMoney(-5);
             SpeedCount++;
