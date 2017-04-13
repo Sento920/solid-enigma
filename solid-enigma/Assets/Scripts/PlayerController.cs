@@ -196,7 +196,19 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	public void RemovePerson(){
+
+    /*public void evacAddPerson(GameObject person)
+    {
+        if (numPeople > 0)
+        {
+            person.transform.SetParent(this.transform);
+            numPeople++;
+            passengers.Add(person);
+            person.transform.position = transform.position;
+        }
+    }*/
+
+    public void RemovePerson(){
         if (numPeople > 0) {
             numPeople--;
             Destroy(passengers[numPeople]);
@@ -204,7 +216,8 @@ public class PlayerController : MonoBehaviour {
         }
 	}
 
-	public bool HasCapacity(){
+
+    public bool HasCapacity(){
 		return (peopleCapacity - numPeople) > 0;
 	}
 
