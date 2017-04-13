@@ -26,4 +26,16 @@ public class EvacController : MonoBehaviour {
             }
         }
     }
+
+ /*   void OnCollisionEnter(Collision zone)
+    {
+        if (zone.transform.tag == "player")
+        {
+            zone.gameObject.GetComponent<PlayerController>().evacAddPerson(gameObject);
+            this.GetComponent<Rigidbody>().isKinematic = true;
+            this.GetComponent<SphereCollider>().enabled = false;
+            this.GetComponent<CapsuleCollider>().enabled = false;
+            this.enabled = false;
+        }
+    }*/
 }
