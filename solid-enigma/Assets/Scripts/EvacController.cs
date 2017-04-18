@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class EvacController : MonoBehaviour {
 
+	[SerializeField]
+	private GameObject[] evacSlots;
+	int numPeople = 0;
+
     // Use this for initialization
     void Start () {
 
@@ -19,9 +23,16 @@ public class EvacController : MonoBehaviour {
         {
             PlayerController p = other.GetComponent<PlayerController>();
             while (p.GetNumPassengers() > 0) {
-                p.RemovePerson();
-                Debug.Log("Person evacuated!");
-                p.AddMoney(5);
+                GameObject person = p.RemovePerson();
+				if (person){
+					Debug.Log ("Person evacuated!");
+					person.transform.SetParent (this.transform);
+					person.transform.position = evacSlots [numPeople].transform.position;
+					numPeople++;
+					p.AddMoney (5);
+				} else {
+					Debug.Log ("NULL RETURNED");
+				}
             }
         }
     }
@@ -30,7 +41,7 @@ public class EvacController : MonoBehaviour {
     {
     }
 
-    void OnCollisionEnter(Collision zone)
+    /*void OnCollisionEnter(Collision zone)
        {
            if (zone.transform.tag == "player")
            {
@@ -40,5 +51,5 @@ public class EvacController : MonoBehaviour {
                this.GetComponent<CapsuleCollider>().enabled = false;
                this.enabled = false;
            }
-       } 
+       } */
 }

@@ -196,12 +196,16 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-    public void RemovePerson(){
-        if (numPeople > 0) {
-            numPeople--;
-            Destroy(passengers[numPeople]);
-            passengers.Remove(passengers[numPeople]);
-        }
+	public GameObject RemovePerson(){
+		if (numPeople > 0) {
+			numPeople--;
+			//Destroy(passengers[numPeople]);
+			GameObject temp = passengers[numPeople];
+			passengers.Remove (passengers [numPeople]);
+			return temp;
+		} else {
+			return null;
+		}
 	}
 
 

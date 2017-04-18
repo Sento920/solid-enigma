@@ -16,6 +16,10 @@ public class RoundController : MonoBehaviour {
     private GameObject spawnPosition;
     [SerializeField]
     private GameObject clockRef;
+	[SerializeField]
+	private int peepCount;
+	[SerializeField]
+	private int peepQuota = 3;
 
     [SerializeField] private float timeInMinutes = 5;
     [SerializeField] private GameObject sun;
@@ -28,6 +32,7 @@ public class RoundController : MonoBehaviour {
     void Start () {
         ResetTimer();
         StartTimer();
+		peepCount = 0;
 		shopCanvas.gameObject.SetActive(false);
         pauseCanvas.gameObject.SetActive(false);
         clockRef.GetComponent<ClockScript>().SetMaxValue(timeLeft);
@@ -56,6 +61,9 @@ public class RoundController : MonoBehaviour {
             } 
 
             if (timeLeft <= 0.0f) {
+				if (peepCount < peepQuota) {
+					Debug.Log ("YOU MADE CHRIS SAD, AND YOU SHOULD BE ASHAMED.\nYA FIRED!");
+				}
                 PauseTimer();
                 ResetTimer();
 
@@ -133,6 +141,10 @@ public class RoundController : MonoBehaviour {
         state = GameState.Playing;
         Time.timeScale = 1;
     }
+
+	public void AddPoint(){
+		peepCount++;
+	}
 
     public void ExitGame()
     {
