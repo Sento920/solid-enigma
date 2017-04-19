@@ -222,4 +222,9 @@ public class PlayerController : MonoBehaviour {
         fuelGauge.GetComponent<GaugeScript>().SetMinValue(0f);
     }
 
+    public Transform getLoc() {
+        return GetComponent<Transform>();
+    }
+
+
 }
