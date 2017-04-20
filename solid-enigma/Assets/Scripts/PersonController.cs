@@ -27,6 +27,8 @@ public class PersonController : MonoBehaviour {
         }
 		float distX = this.transform.position.x - target.position.x;
 		float distZ = this.transform.position.z - target.position.z;
+
+
 		if ((distX > 10 || distX < -10) && (distZ > 10 || distZ < -10)) {
 			rb.isKinematic = true;
 			trigger.enabled = false;
@@ -35,6 +37,21 @@ public class PersonController : MonoBehaviour {
 			trigger.enabled = true;
 		}
     }
+
+   // void OnBecameVisible()
+   // {
+       // Debug.Log("Im visible");
+       // rb.isKinematic = false;
+       // trigger.enabled = true;
+ //   }
+
+  //  void OnBecameInvisible()
+  //  {
+     //   Debug.Log("NOT VISIBLE");
+     //   rb.isKinematic = true;
+      //  trigger.enabled = false;
+
+   // }
 
     // On Trigger Enter is called Upon Entering a Trigger Area.
     void OnTriggerStay(Collider other) {

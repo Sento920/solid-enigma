@@ -26,7 +26,7 @@ public class RoundController : MonoBehaviour {
     [SerializeField] private CanvasGroup shopCanvas;
 	[SerializeField] private CanvasGroup gameCanvas;
     [SerializeField] private CanvasGroup pauseCanvas;
-    [SerializeField] private Text timerText;
+    //[SerializeField] private Text timerText;
 
     // Use this for initialization
     void Start () {
@@ -51,7 +51,7 @@ public class RoundController : MonoBehaviour {
             sun.transform.rotation = Quaternion.Euler(sunAngle, -30.0f, 0.0f);
 
             //Debug.Log(getTime());
-			timerText.text = getTime();
+			//timerText.text = getTime();
             clockRef.GetComponent<ClockScript>().SetTargetValue(timeLeft);
             if ((Input.GetKeyDown(KeyCode.Escape) == true))
             {   

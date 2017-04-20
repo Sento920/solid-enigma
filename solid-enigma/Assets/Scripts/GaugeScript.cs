@@ -10,7 +10,13 @@ public class GaugeScript : MonoBehaviour {
 
 	[SerializeField]
 	private Image Indicator;
-	[SerializeField]
+    [SerializeField]
+    private Image compass;
+    [SerializeField]
+    private Transform player;
+    [SerializeField]
+    private Transform spawn;
+    [SerializeField]
     private float target;
     private float angle;
     [SerializeField]
@@ -19,28 +25,42 @@ public class GaugeScript : MonoBehaviour {
     private float minVal;
     private float maxAngle;
     private float minAngle;
-    
 
-	// Use this for initialization
-	void Start () {
+    private string target_name = "EvacZone";
+
+
+    // Use this for initialization
+    void Start () {
         //Grabs the Sprite, converts the size to Pixels and then uses the pixels + Sprite's pivot to set the correct pivot for the RectTransform.
         target = 0;
         minAngle = 180;
         maxAngle = -90;
         angle = 0;
-	}
+        //spawn = GameObject.Find(target_name).transform;
+    }
 	
 	// Update is called once per frame
 	void Update () {
 	    angle = Mathf.Clamp(target, minVal, maxVal);
         angle =  ((maxAngle - minAngle) * (target / maxVal) -180);
-        //Debug.Log("MAX: " + maxVal + " MIN: " + minVal + " TARGET: " + target + " Angle: " + angle);
-        //transform target to Angle~!
-
 		Indicator.transform.rotation = Quaternion.Euler (new Vector3(0f,0f,angle));
-        //Debug.Log("Rotation: " + Indicator.transform.rotation);
 
-	}
+        Vector3 direction = spawn.position - player.position;
+        angle = Vector3.Angle(direction, transform.forward);
+        Vector3 crossProduct = Vector3.Cross(direction, transform.forward);
+        if(crossProduct.y < 0) {
+            angle *= -1;
+        }
+        //Debug.Log("direction: " + direction + " Cross: "+crossProduct+" angle: " + angle);
+        compass.GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, angle);
+    }
+
+    public void SetPlayerLocation(Transform target) {
+        player = target;
+    }
+
+
+
 
 	public void SetTargetValue(float target){
         //Debug.Log("TARGET SET TO: " + target);

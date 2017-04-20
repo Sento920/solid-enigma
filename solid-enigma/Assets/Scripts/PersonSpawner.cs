@@ -8,8 +8,8 @@ public class PersonSpawner : MonoBehaviour {
 	[SerializeField] private GameObject person;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Awake () {
+        reshuffle(spawnPositions);
 	}
 	
 	// Update is called once per frame
@@ -17,9 +17,29 @@ public class PersonSpawner : MonoBehaviour {
 		
 	}
 
-	public void SpawnPerson () {
-		int index = Random.Range (0, spawnPositions.Length);
-
-		Instantiate (person, spawnPositions[index].position, Quaternion.identity);
+    public void SpawnPerson(int x) {
+       // int index = Random.Range(0, spawnPositions.Length);
+        for (int i = 0; i < x; i++) {
+            Instantiate(person, spawnPositions[i].position, Quaternion.identity);
+        }
 	}
+
+    public int GetSize()
+    {
+        return spawnPositions.Length;
+    }
+
+    void reshuffle(Transform[] spawnPositions)
+    {
+        // Knuth shuffle algorithm :: courtesy of Wikipedia :)
+        for (int t = 0; t < spawnPositions.Length; t++)
+        {
+            Transform tmp = spawnPositions[t];
+            int r = Random.Range(t, spawnPositions.Length);
+            spawnPositions[t] = spawnPositions[r];
+            spawnPositions[r] = tmp;
+        }
+    }
+
+
 }
