@@ -33,7 +33,7 @@ public class PersonController : MonoBehaviour {
 			rb.isKinematic = true;
 			trigger.enabled = false;
 		} else {
-			//rb.isKinematic = false;
+			rb.isKinematic = false;
 			trigger.enabled = true;
 		}
     }
