@@ -136,7 +136,7 @@ public class LevelGenerator : MonoBehaviour
             int y = integers[rand] / width;
             integers.Remove(rand);
 
-            Vector3 pos = Random.insideUnitSphere * 10.0f;
+            Vector3 pos = Random.insideUnitSphere * 4.0f;
 
             Instantiate(fuel, new Vector3(((x * tileWidth) - (tileWidth * width) / 2) + pos.x, 1, ((y * tileLength) - (tileLength * height) / 2) + pos.z), Quaternion.identity);
         }
