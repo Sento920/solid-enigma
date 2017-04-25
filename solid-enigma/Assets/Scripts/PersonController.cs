@@ -50,7 +50,6 @@ public class PersonController : MonoBehaviour {
      //   Debug.Log("NOT VISIBLE");
      //   rb.isKinematic = true;
       //  trigger.enabled = false;
-
    // }
 
     // On Trigger Enter is called Upon Entering a Trigger Area.
