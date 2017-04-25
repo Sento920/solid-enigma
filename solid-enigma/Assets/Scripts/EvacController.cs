@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class EvacController : MonoBehaviour {
 
+    [SerializeField]
+    private RoundController rc;
 	[SerializeField]
 	private GameObject[] evacSlots;
 	int numPeople = 0;
 
     // Use this for initialization
     void Start () {
-
+        rc = GameObject.FindObjectOfType<RoundController>();
     }
 	
 	// Update is called once per frame
@@ -30,6 +32,7 @@ public class EvacController : MonoBehaviour {
 					person.transform.position = evacSlots [numPeople].transform.position;
 					numPeople++;
 					p.AddMoney (5);
+                    rc.AddPoint();
 				} else {
 					Debug.Log ("NULL RETURNED");
 				}

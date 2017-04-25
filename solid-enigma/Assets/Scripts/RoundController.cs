@@ -76,6 +76,7 @@ public class RoundController : MonoBehaviour {
 			//gameCanvas.gameObject.SetActive(false);
             // TODO: shop related things, if they apply...
 			playerRef.GetComponent<PlayerController>().setActiveTime(false);
+            playerRef.transform.position = spawnPosition.transform.position;
         } else if (state == GameState.Paused) {
             // look for unpause...
             playerRef.GetComponent<PlayerController>().setActiveTime(false);
