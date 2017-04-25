@@ -19,6 +19,7 @@ public class EvacController : MonoBehaviour
     void Start()
     {
         rc = GameObject.FindObjectOfType<RoundController>();
+		passengers = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -39,6 +40,7 @@ public class EvacController : MonoBehaviour
                     Debug.Log("Person evacuated!");
                     person.transform.SetParent(this.transform);
                     person.transform.position = evacSlots[numPeople].transform.position;
+					passengers.Add (person);
                     numPeople++;
                     p.AddMoney(5);
                     rc.AddPoint();
@@ -51,27 +53,19 @@ public class EvacController : MonoBehaviour
         }
     }
 
-    void OnBecameVisible()
-    {
-        Debug.Log("Im visible");
-        rb.isKinematic = false;
-        trigger.enabled = true;
-    }
-
     void OnBecameInvisible()
     {
-        Debug.Log("NOT VISIBLE");
+        //Debug.Log("NOT VISIBLE Dumb Dumb");
         //destroy players on evac pad
-        PlayerController p = GetComponent<PlayerController>();
-        while (p.GetNumPassengers() > 0)
+		int numPeoples = passengers.Count;
+
+		for(int i = 0; i < numPeoples; i++)
         {
-            if (p)
-            {
-                Debug.Log("NOT VISIBLE");
-                Destroy(p);
-            }
-            rb.isKinematic = true;
-            trigger.enabled = false;
+			Debug.Log("i: " + i + " Person Val: " + passengers[i].transform.position);
+			GameObject p = passengers [i];
+			passengers.RemoveAt (i);
+			Destroy(p);
+			numPeople--;
         }
     }
 }
