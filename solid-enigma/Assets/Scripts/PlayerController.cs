@@ -50,6 +50,9 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private GameObject Bow;
 
+    [SerializeField]
+    private TrailRenderer wakeRenderer;
+
     // Use this for initialization
     void Start () {
 		passengers = new List<GameObject> ();
@@ -71,6 +74,8 @@ public class PlayerController : MonoBehaviour {
 
             if (desiredHeading.magnitude > 1.0f)
                 desiredHeading.Normalize();
+
+            wakeRenderer.widthMultiplier = Mathf.Min(rb.velocity.magnitude * 4.0f, 7.0f);
 
             //LifeRings
             if (numRings > 0 && Input.GetKeyDown ("space")) {
