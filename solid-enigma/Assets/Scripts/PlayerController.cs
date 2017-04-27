@@ -39,11 +39,7 @@ public class PlayerController : MonoBehaviour {
 	private int peopleCapacity;
 	private List<GameObject> passengers;
 
-    [SerializeField]
-    private int numRings;
-    [SerializeField]
-    private int ringCapacity;
-    public GameObject Ring;
+    
     [SerializeField]
     private List<GameObject> slots;
 	private bool activeTime;
@@ -77,14 +73,6 @@ public class PlayerController : MonoBehaviour {
 
             wakeRenderer.widthMultiplier = Mathf.Min(rb.velocity.magnitude * 4.0f, 7.0f);
 
-            //LifeRings
-            if (numRings > 0 && Input.GetKeyDown ("space")) {
-                //Create a new ring
-                //new Vector3(transform.position.x  + desiredHeading.x,0f, transform.position.z + desiredHeading.z)
-                GameObject temp = Instantiate<GameObject> (Ring,Bow.transform.position, transform.rotation);
-				temp.GetComponent<Rigidbody> ().AddForce (temp.GetComponent<Rigidbody>().transform.forward * accel * 5f);
-				numRings--;
-			}
         } else {
             UpdateFuelGauge();
         }
@@ -222,9 +210,7 @@ public class PlayerController : MonoBehaviour {
         return (numPeople);
     }
 
-    public void AddRing() {
-        numRings++;
-    }
+    
 
     private void UpdateFuelGauge() {
         fuelGauge.GetComponent<GaugeScript>().SetMaxValue(fuelCapacity);

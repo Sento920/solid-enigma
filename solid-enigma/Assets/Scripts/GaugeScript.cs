@@ -26,9 +26,6 @@ public class GaugeScript : MonoBehaviour {
     private float maxAngle;
     private float minAngle;
 
-    private string target_name = "EvacZone";
-
-
     // Use this for initialization
     void Start () {
         //Grabs the Sprite, converts the size to Pixels and then uses the pixels + Sprite's pivot to set the correct pivot for the RectTransform.
