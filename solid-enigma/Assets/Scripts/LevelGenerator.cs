@@ -33,12 +33,6 @@ public class LevelGenerator : MonoBehaviour
         GenerateLevel();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void RecursiveGenerateStreets(int startx, int endx, int starty, int endy, bool vertical)
     {
         //if (((endx - startx <= 2 && endy - starty <= 8) || (endy - starty <= 2 && endx - startx <= 8)))
@@ -48,9 +42,9 @@ public class LevelGenerator : MonoBehaviour
         int splitRoad;
 
         if (vertical)
-            splitRoad = Random.Range(startx + 1, endx);
+            splitRoad = Random.Range(startx + 2, endx - 2);
         else
-            splitRoad = Random.Range(starty + 1, endy);
+            splitRoad = Random.Range(starty + 2, endy - 2);
 
         // fill road
         if (vertical)
