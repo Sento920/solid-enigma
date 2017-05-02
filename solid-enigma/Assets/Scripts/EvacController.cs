@@ -14,6 +14,8 @@ public class EvacController : MonoBehaviour
     private Collider trigger;
     private Rigidbody rb;
     private List<GameObject> passengers;
+	[SerializeField]
+	private GameObject platform;
 
     // Use this for initialization
     void Start()
@@ -39,7 +41,8 @@ public class EvacController : MonoBehaviour
                 {
                     Debug.Log("Person evacuated!");
                     person.transform.SetParent(this.transform);
-                    person.transform.position = evacSlots[numPeople].transform.position;
+					Vector2 pos = Random.insideUnitCircle * 2.0f;
+					person.transform.position = platform.transform.position + new Vector3 (pos.x, 0.5f, pos.y);
 					passengers.Add (person);
                     numPeople++;
                     p.AddMoney(5);
