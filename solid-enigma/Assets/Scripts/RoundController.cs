@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class RoundController : MonoBehaviour {
 
-    enum GameState { Playing, Shop, Paused };   // what other states do we need?  loading?  starting?  game over?
+    enum GameState { Playing, Shop, Paused, Lose };   // what other states do we need?  loading?  starting?  game over?
 
     private float timeLeft;
     private GameState state = GameState.Paused;
@@ -26,6 +26,7 @@ public class RoundController : MonoBehaviour {
     [SerializeField] private CanvasGroup shopCanvas;
 	[SerializeField] private CanvasGroup gameCanvas;
     [SerializeField] private CanvasGroup pauseCanvas;
+    [SerializeField] private CanvasGroup loseCanvas;
     [SerializeField]
     private LevelGenerator levelGenerator;
     //[SerializeField] private Text timerText;
@@ -37,6 +38,7 @@ public class RoundController : MonoBehaviour {
 		peepCount = 0;
 		shopCanvas.gameObject.SetActive(false);
         pauseCanvas.gameObject.SetActive(false);
+        loseCanvas.gameObject.SetActive(false);
         clockRef.GetComponent<ClockScript>().SetMaxValue(timeLeft);
         clockRef.GetComponent<ClockScript>().SetMinValue(0);
     }
@@ -65,11 +67,13 @@ public class RoundController : MonoBehaviour {
             if (timeLeft <= 0.0f) {
 				if (peepCount < peepQuota) {
 					Debug.Log ("YOU MADE CHRIS SAD, AND YOU SHOULD BE ASHAMED.\nYA FIRED!");
-				}
+                    loseCanvas.gameObject.SetActive(true);
+                }
+                //loseCanvas.gameObject.SetActive(true);
                 PauseTimer();
                 ResetTimer();
 
-				state = GameState.Shop;
+				state = GameState.Lose;
 
                 // TODO: setup shop (hah), and get ready for the next round
             }
