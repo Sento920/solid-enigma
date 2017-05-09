@@ -27,9 +27,15 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     private GameObject fuel;
 
+    private ArrayList buildingRef;
+    private ArrayList fuelRef;
+
     // Use this for initialization
     void Start()
     {
+        buildingRef = new ArrayList();
+        fuelRef = new ArrayList();
+
         GenerateLevel();
     }
 
@@ -70,8 +76,38 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    void GenerateLevel()
+    void ClearLevel()
     {
+        for (int i = 0; i < buildingRef.Count; i++)
+        {
+            if (buildingRef[i] != null)
+            {
+                GameObject r = (GameObject) buildingRef[i];
+
+                if (r.GetComponent<PersonSpawner>() != null)
+                    r.GetComponent<PersonSpawner>().despawnPeople();
+
+                Destroy(r);
+            }
+        }
+
+        for (int i = 0; i < fuelRef.Count; i++)
+        {
+            if (fuelRef[i] != null)
+            {
+                GameObject r = (GameObject)fuelRef[i];
+                Destroy(r);
+            }
+        }
+
+        buildingRef.Clear();
+        fuelRef.Clear();
+    }
+
+    public void GenerateLevel()
+    {
+        ClearLevel();
+
         map = new int[width * height];
 
         for (int i = 0; i < width * height; i++)
@@ -88,6 +124,7 @@ public class LevelGenerator : MonoBehaviour
                 if (map[(width * y) + x] == 1)
                 {
                     GameObject o = Instantiate(tiles[Random.Range(0, tiles.Length)], new Vector3((x * tileWidth) - (tileWidth * width) / 2, gameObject.transform.position.y, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
+                    buildingRef.Add(o);
                     PersonSpawner p = o.GetComponent<PersonSpawner>();
 
  
@@ -109,7 +146,7 @@ public class LevelGenerator : MonoBehaviour
 
                 }
                 else if (map[(width * y) + x] == 2)
-                    Instantiate(evac, new Vector3((x * tileWidth) - (tileWidth * width) / 2, gameObject.transform.position.y, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity);
+                    buildingRef.Add(Instantiate(evac, new Vector3((x * tileWidth) - (tileWidth * width) / 2, gameObject.transform.position.y, (y * tileLength) - (tileLength * height) / 2), Quaternion.identity));
             }
         }
 
@@ -132,7 +169,7 @@ public class LevelGenerator : MonoBehaviour
 
             Vector3 pos = Random.insideUnitSphere * 4.0f;
 
-            Instantiate(fuel, new Vector3(((x * tileWidth) - (tileWidth * width) / 2) + pos.x, 1, ((y * tileLength) - (tileLength * height) / 2) + pos.z), Quaternion.identity);
+            fuelRef.Add(Instantiate(fuel, new Vector3(((x * tileWidth) - (tileWidth * width) / 2) + pos.x, 1, ((y * tileLength) - (tileLength * height) / 2) + pos.z), Quaternion.identity));
         }
 
     }

@@ -26,6 +26,8 @@ public class RoundController : MonoBehaviour {
     [SerializeField] private CanvasGroup shopCanvas;
 	[SerializeField] private CanvasGroup gameCanvas;
     [SerializeField] private CanvasGroup pauseCanvas;
+    [SerializeField]
+    private LevelGenerator levelGenerator;
     //[SerializeField] private Text timerText;
 
     // Use this for initialization
@@ -120,6 +122,7 @@ public class RoundController : MonoBehaviour {
     }
 
 	public void NewDay(){
+        levelGenerator.GenerateLevel();
 		shopCanvas.gameObject.SetActive(false);
 		gameCanvas.gameObject.SetActive(true);
         shopCanvas.GetComponent<ShopButtonController>().enableShopButtons();

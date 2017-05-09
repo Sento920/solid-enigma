@@ -7,7 +7,8 @@ public class PersonSpawner : MonoBehaviour {
 	[SerializeField] private Transform[] spawnPositions;
 	[SerializeField] private GameObject person;
 
-	// Use this for initialization
+    private ArrayList peopleRef;
+
 	void Awake () {
         reshuffle(spawnPositions);
 	}
@@ -18,9 +19,12 @@ public class PersonSpawner : MonoBehaviour {
 	}
 
     public void SpawnPerson(int x) {
-       // int index = Random.Range(0, spawnPositions.Length);
+        // int index = Random.Range(0, spawnPositions.Length);
+        if (peopleRef == null)
+            peopleRef = new ArrayList();
+
         for (int i = 0; i < x; i++) {
-            Instantiate(person, spawnPositions[i].position, Quaternion.identity);
+            peopleRef.Add(Instantiate(person, spawnPositions[i].position, Quaternion.identity));
         }
 	}
 
@@ -41,5 +45,17 @@ public class PersonSpawner : MonoBehaviour {
         }
     }
 
+    public void despawnPeople()
+    {
+        for (int i = 0; i < peopleRef.Count; i++)
+        {
+            if (peopleRef[i] != null)
+            {
+                GameObject r = (GameObject)peopleRef[i];
+                Destroy(r);
+            }
+        }
 
+        peopleRef.Clear();
+    }
 }
