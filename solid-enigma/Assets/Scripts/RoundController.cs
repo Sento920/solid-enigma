@@ -26,7 +26,7 @@ public class RoundController : MonoBehaviour {
     [SerializeField] private CanvasGroup shopCanvas;
 	[SerializeField] private CanvasGroup gameCanvas;
     [SerializeField] private CanvasGroup pauseCanvas;
-    [SerializeField] private CanvasGroup loseCanvas;
+    [SerializeField] private Canvas loseCanvas;
     [SerializeField]
     private LevelGenerator levelGenerator;
     //[SerializeField] private Text timerText;
@@ -65,15 +65,19 @@ public class RoundController : MonoBehaviour {
             } 
 
             if (timeLeft <= 0.0f) {
+				PauseTimer();
+				ResetTimer();
+
 				if (peepCount < peepQuota) {
 					Debug.Log ("YOU MADE CHRIS SAD, AND YOU SHOULD BE ASHAMED.\nYA FIRED!");
-                    loseCanvas.gameObject.SetActive(true);
-                }
-                //loseCanvas.gameObject.SetActive(true);
-                PauseTimer();
-                ResetTimer();
+					loseCanvas.gameObject.SetActive (true);
+					state = GameState.Lose;
+				} else {
+					//loseCanvas.gameObject.SetActive(true);
+					state = GameState.Shop;
+				}
 
-				state = GameState.Lose;
+
 
                 // TODO: setup shop (hah), and get ready for the next round
             }
@@ -128,6 +132,7 @@ public class RoundController : MonoBehaviour {
 	public void NewDay(){
         levelGenerator.GenerateLevel();
 		shopCanvas.gameObject.SetActive(false);
+		loseCanvas.gameObject.SetActive (false);
 		gameCanvas.gameObject.SetActive(true);
         shopCanvas.GetComponent<ShopButtonController>().enableShopButtons();
         playerRef.transform.position = spawnPosition.transform.position;
