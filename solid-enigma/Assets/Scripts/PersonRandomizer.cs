@@ -13,7 +13,7 @@ public class PersonRandomizer : MonoBehaviour {
         Material[] bodyColors = MaterialHolder.GetComponent<MaterialHolder>().getA1();
         Material[] headColors = MaterialHolder.GetComponent<MaterialHolder>().getA2();
         GetComponent<Renderer>().material = bodyColors[Random.Range(0,bodyColors.Length)];
-        GetComponentInChildren<Renderer>().material = headColors[Random.Range(0, headColors.Length)];
+        transform.Find("head").GetComponent<Renderer>().material = headColors[Random.Range(0, headColors.Length)];
 	}
 
 }
