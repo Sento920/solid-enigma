@@ -31,10 +31,10 @@ public class ShopButtonController : MonoBehaviour
 
     public void BuyFuel()
     {
-        if (PlayerBoat.GetComponent<PlayerController>().money > 0)
+        if (PlayerBoat.GetComponent<PlayerController>().money > 20)
         {
             PlayerBoat.GetComponent<PlayerController>().AddFuel(100);
-            PlayerBoat.GetComponent<PlayerController>().AddMoney(-5);
+            PlayerBoat.GetComponent<PlayerController>().AddMoney(-20);
 
             if (PlayerBoat.GetComponent<PlayerController>().GetFuel() >= PlayerBoat.GetComponent<PlayerController>().GetFuelCapacity())
             {
@@ -52,11 +52,11 @@ public class ShopButtonController : MonoBehaviour
 
     public void BuyFuelCapacityUpgrade()
     {
-        if (PlayerBoat.GetComponent<PlayerController>().money > 0)
+		if (PlayerBoat.GetComponent<PlayerController>().money > 50 * (CapacityCount+1))
         {
             PlayerBoat.GetComponent<PlayerController>().fuelCapacity += 100;
             PlayerBoat.GetComponent<PlayerController>().AddFuel(100);
-            PlayerBoat.GetComponent<PlayerController>().AddMoney(-5);
+			PlayerBoat.GetComponent<PlayerController>().AddMoney(-50 * (CapacityCount+1));
             CapacityCount++;
             if (CapacityCount >= 5)
             {
@@ -75,11 +75,11 @@ public class ShopButtonController : MonoBehaviour
 
     public void BuySpeedUpgrade()
     {
-        if (PlayerBoat.GetComponent<PlayerController>().money > 0)
+		if (PlayerBoat.GetComponent<PlayerController>().money > 50 *  (SpeedCount+1))
         {
             PlayerBoat.GetComponent<PlayerController>().maxSpeed += .5f;
             PlayerBoat.GetComponent<PlayerController>().accel += 50;
-            PlayerBoat.GetComponent<PlayerController>().AddMoney(-5);
+			PlayerBoat.GetComponent<PlayerController>().AddMoney(-50 * (SpeedCount+1));
             SpeedCount++;
             if (SpeedCount >= 5)
             {

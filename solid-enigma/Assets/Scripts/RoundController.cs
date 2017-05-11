@@ -19,7 +19,9 @@ public class RoundController : MonoBehaviour {
 	[SerializeField]
 	private int peepCount;
 	[SerializeField]
-	private int peepQuota = 3;
+	private int peepQuota;
+	[SerializeField]
+	private Text peepUI;
 
     [SerializeField] private float timeInMinutes = 5;
     [SerializeField] private GameObject sun;
@@ -47,6 +49,7 @@ public class RoundController : MonoBehaviour {
 	void Update () {
         if (state == GameState.Playing) {
 			gameCanvas.gameObject.SetActive(true);
+			peepUI.text = peepCount + "/" + peepQuota;
             timeLeft -= Time.deltaTime;
 			playerRef.GetComponent<PlayerController>().setActiveTime(true);
             float sunAngle = (timeLeft / (timeInMinutes * 60));
@@ -69,7 +72,7 @@ public class RoundController : MonoBehaviour {
 				ResetTimer();
 
 				if (peepCount < peepQuota) {
-					Debug.Log ("YOU MADE CHRIS SAD, AND YOU SHOULD BE ASHAMED.\nYA FIRED!");
+					//Debug.Log ("YOU MADE CHRIS SAD, AND YOU SHOULD BE ASHAMED.\nYA FIRED!");
 					loseCanvas.gameObject.SetActive (true);
 					state = GameState.Lose;
 				} else {
@@ -136,6 +139,7 @@ public class RoundController : MonoBehaviour {
 		gameCanvas.gameObject.SetActive(true);
         shopCanvas.GetComponent<ShopButtonController>().enableShopButtons();
         playerRef.transform.position = spawnPosition.transform.position;
+		AddQuota ();
 		ResetTimer();
 		StartTimer();
 	}
@@ -163,4 +167,12 @@ public class RoundController : MonoBehaviour {
     {
         Application.Quit();
     }
+
+	public void AddQuota(){
+		peepQuota += 2;
+	}
+
+	public int GetQuota(){
+		return peepQuota;
+	}
 }
