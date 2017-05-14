@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour {
 	//public Text fuelUI;
 
     public Text moneyUI;
+	public Text shopMoney;
 
     [SerializeField]
     private GameObject fuelGauge;
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour {
     public float fuelCapacity = 100.0f;
 
     [SerializeField]
-    public int money = 50;
+    public int money = 0;
 
 	[SerializeField]
 	private int numPeople;
@@ -79,6 +80,7 @@ public class PlayerController : MonoBehaviour {
 
 		//fuelUI.text = "fuel: " + fuel;
 		moneyUI.text = "money: " + money;
+		shopMoney.text = "money: " + money;
     }
 
     private float getAngle(Vector3 vec) {

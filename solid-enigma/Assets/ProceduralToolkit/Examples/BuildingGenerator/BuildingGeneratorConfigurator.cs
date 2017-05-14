@@ -29,35 +29,6 @@ namespace ProceduralToolkit.Examples
         {
             Generate();
             SetupSkyboxAndPalette();
-
-            InstantiateControl<SliderControl>(leftPanel)
-                .Initialize("Width", minWidth, maxWidth, (int) config.width, value =>
-                {
-                    config.width = value;
-                    Generate();
-                });
-
-            InstantiateControl<SliderControl>(leftPanel)
-                .Initialize("Length", minLength, maxLength, (int) config.length, value =>
-                {
-                    config.length = value;
-                    Generate();
-                });
-
-            InstantiateControl<SliderControl>(leftPanel)
-                .Initialize("Floors", minFloorCount, maxFloorCount, config.floors, value =>
-                {
-                    config.floors = value;
-                    Generate();
-                });
-
-            InstantiateControl<ToggleControl>(leftPanel).Initialize("Has attic", config.hasAttic, value =>
-            {
-                config.hasAttic = value;
-                Generate();
-            });
-
-            InstantiateControl<ButtonControl>(leftPanel).Initialize("Generate", () => Generate());
         }
 
         private void Update()
@@ -92,8 +63,8 @@ namespace ProceduralToolkit.Examples
             float buildingRadius = Mathf.Sqrt(config.length/2*config.length/2 + config.width/2*config.width/2);
             float platformRadius = buildingRadius + platformRadiusOffset;
 
-            var platformDraft = Platform(platformRadius, platformHeight);
-            AssignDraftToMeshFilter(platformDraft, platformMeshFilter, ref platformMesh);
+           // var platformDraft = Platform(platformRadius, platformHeight);
+            //AssignDraftToMeshFilter(platformDraft, platformMeshFilter, ref platformMesh);
         }
     }
 }
