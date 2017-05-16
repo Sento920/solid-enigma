@@ -26,25 +26,30 @@ public class ShopButtonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerBoat.GetComponent<PlayerController>().GetFuel() >= PlayerBoat.GetComponent<PlayerController>().GetFuelCapacity())
+        if(FuelButton.IsActive() == true)
         {
-            FuelButton.GetComponentInChildren<Text>().text = "Buy Fuel: FULL";
-        }else
-            FuelButton.GetComponentInChildren<Text>().text = "Buy Fuel: $" + 20;
+            if (PlayerBoat.GetComponent<PlayerController>().GetFuel() >= PlayerBoat.GetComponent<PlayerController>().GetFuelCapacity())
+            {
+                FuelButton.GetComponentInChildren<Text>().text = "Buy Fuel: FULL";
+            }
+            else
+                FuelButton.GetComponentInChildren<Text>().text = "Buy Fuel: $" + 20;
 
-        if (SpeedCount < 5)
-        {
-            SpeedButton.GetComponentInChildren<Text>().text = "Speed Capacity: $" + 50 * (SpeedCount + 1);
-        }
-        else
-            SpeedButton.GetComponentInChildren<Text>().text = "Speed Capacity: MAX";
+            if (SpeedCount < 5)
+            {
+                SpeedButton.GetComponentInChildren<Text>().text = "Speed Capacity: $" + 50 * (SpeedCount + 1);
+            }
+            else
+                SpeedButton.GetComponentInChildren<Text>().text = "Speed Capacity: MAX";
 
-        if (CapacityCount < 5)
-        {
-            CapacityButton.GetComponentInChildren<Text>().text = "Fuel Capacity: $" + 50 * (CapacityCount + 1);
+            if (CapacityCount < 5)
+            {
+                CapacityButton.GetComponentInChildren<Text>().text = "Fuel Capacity: $" + 50 * (CapacityCount + 1);
+            }
+            else
+                CapacityButton.GetComponentInChildren<Text>().text = "Fuel Capacity: MAX";
         }
-        else
-            CapacityButton.GetComponentInChildren<Text>().text = "Fuel Capacity: MAX";
+      
 
 
 

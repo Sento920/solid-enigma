@@ -23,6 +23,9 @@ public class RoundController : MonoBehaviour {
 	[SerializeField]
 	private Text peepUI;
 
+    [SerializeField]
+    private Text rescueText;
+
     [SerializeField] private float timeInMinutes = 5;
     [SerializeField] private GameObject sun;
     [SerializeField] private CanvasGroup shopCanvas;
@@ -41,6 +44,7 @@ public class RoundController : MonoBehaviour {
 		shopCanvas.gameObject.SetActive(false);
         pauseCanvas.gameObject.SetActive(false);
         loseCanvas.gameObject.SetActive(false);
+        rescueText.enabled = true;
         clockRef.GetComponent<ClockScript>().SetMaxValue(timeLeft);
         clockRef.GetComponent<ClockScript>().SetMinValue(0);
     }
@@ -79,11 +83,17 @@ public class RoundController : MonoBehaviour {
 					//loseCanvas.gameObject.SetActive(true);
 					state = GameState.Shop;
 				}
-
-
-
                 // TODO: setup shop (hah), and get ready for the next round
             }
+
+
+            rescueText.text = "Rescue " + peepQuota + " People";
+            if (timeLeft < (timeInMinutes  * 60) - 3)
+            {
+                rescueText.enabled = false;
+            }
+
+
         } else if (state == GameState.Shop) {
 			shopCanvas.gameObject.SetActive(true);
 			//gameCanvas.gameObject.SetActive(false);
@@ -137,6 +147,7 @@ public class RoundController : MonoBehaviour {
 		shopCanvas.gameObject.SetActive(false);
 		loseCanvas.gameObject.SetActive (false);
 		gameCanvas.gameObject.SetActive(true);
+        rescueText.enabled = true;
         shopCanvas.GetComponent<ShopButtonController>().enableShopButtons();
         playerRef.transform.position = spawnPosition.transform.position;
 		AddQuota ();
