@@ -62,13 +62,28 @@ public class EvacController : MonoBehaviour
         //destroy players on evac pad
 		int numPeoples = passengers.Count;
 
-		for(int i = 0; i < numPeoples; i++)
+        //for(int i = 0; i < numPeoples; i++)
+        //{
+        //Debug.Log("i: " + i + " Person Val: " + passengers[i].transform.position);
+        //GameObject p = passengers [i];
+        //passengers.RemoveAt (i);
+        //Destroy(p);
+        //numPeople--;
+        //  }
+        clearPeople();
+    }
+
+    private void clearPeople()
+    {
+        for(int i = 0; i < passengers.Count; i++)
         {
-			Debug.Log("i: " + i + " Person Val: " + passengers[i].transform.position);
-			GameObject p = passengers [i];
-			passengers.RemoveAt (i);
-			Destroy(p);
-			numPeople--;
+            GameObject p = passengers[i];
+            if (p)
+            {
+                Debug.Log("cleared person");
+                Destroy(p);
+                passengers.RemoveAt(i);
+            }
         }
     }
 }

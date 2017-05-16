@@ -140,6 +140,7 @@ public class RoundController : MonoBehaviour {
         shopCanvas.GetComponent<ShopButtonController>().enableShopButtons();
         playerRef.transform.position = spawnPosition.transform.position;
 		AddQuota ();
+        peepCount = 0;
 		ResetTimer();
 		StartTimer();
 	}
