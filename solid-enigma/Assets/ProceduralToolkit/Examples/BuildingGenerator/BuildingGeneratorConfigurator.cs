@@ -60,8 +60,8 @@ namespace ProceduralToolkit.Examples
             var buildingDraft = generator.Generate(config);
             AssignDraftToMeshFilter(buildingDraft, buildingMeshFilter, ref buildingMesh);
 
-            float buildingRadius = Mathf.Sqrt(config.length/2*config.length/2 + config.width/2*config.width/2);
-            float platformRadius = buildingRadius + platformRadiusOffset;
+           // float buildingRadius = Mathf.Sqrt(config.length/2*config.length/2 + config.width/2*config.width/2);
+          //  float platformRadius = buildingRadius + platformRadiusOffset;
 
            // var platformDraft = Platform(platformRadius, platformHeight);
             //AssignDraftToMeshFilter(platformDraft, platformMeshFilter, ref platformMesh);

@@ -26,6 +26,27 @@ public class ShopButtonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerBoat.GetComponent<PlayerController>().GetFuel() >= PlayerBoat.GetComponent<PlayerController>().GetFuelCapacity())
+        {
+            FuelButton.GetComponentInChildren<Text>().text = "Buy Fuel: FULL";
+        }else
+            FuelButton.GetComponentInChildren<Text>().text = "Buy Fuel: $" + 20;
+
+        if (SpeedCount < 5)
+        {
+            SpeedButton.GetComponentInChildren<Text>().text = "Speed Capacity: $" + 50 * (SpeedCount + 1);
+        }
+        else
+            SpeedButton.GetComponentInChildren<Text>().text = "Speed Capacity: MAX";
+
+        if (CapacityCount < 5)
+        {
+            CapacityButton.GetComponentInChildren<Text>().text = "Fuel Capacity: $" + 50 * (CapacityCount + 1);
+        }
+        else
+            CapacityButton.GetComponentInChildren<Text>().text = "Fuel Capacity: MAX";
+
+
 
     }
 
@@ -39,11 +60,13 @@ public class ShopButtonController : MonoBehaviour
             if (PlayerBoat.GetComponent<PlayerController>().GetFuel() >= PlayerBoat.GetComponent<PlayerController>().GetFuelCapacity())
             {
                 PlayerBoat.GetComponent<PlayerController>().SetFuel(PlayerBoat.GetComponent<PlayerController>().fuelCapacity);
+                FuelButton.GetComponentInChildren<Text>().text = "Buy Fuel: FULL";
                 FuelButton.GetComponent<Button>().enabled = false;
             }
         }
         else
         {
+            FuelButton.GetComponentInChildren<Text>().text = "Buy Fuel: FULL";
             FuelButton.GetComponent<Button>().enabled = false;
         }
         //GameObject.Find("Fuel Button").GetComponent<Button>().enabled = false;
@@ -60,6 +83,7 @@ public class ShopButtonController : MonoBehaviour
             CapacityCount++;
             if (CapacityCount >= 5)
             {
+                CapacityButton.GetComponentInChildren<Text>().text = "Fuel Capacity: MAX";
                 CapacityButton.enabled = false;
             }
         }
@@ -83,6 +107,7 @@ public class ShopButtonController : MonoBehaviour
             SpeedCount++;
             if (SpeedCount >= 5)
             {
+                SpeedButton.GetComponentInChildren<Text>().text = "Speed Capacity: MAX";
                 SpeedButton.enabled = false;
             }
         }
